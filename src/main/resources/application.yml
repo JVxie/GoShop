@@ -1,0 +1,25 @@
+spring:
+  application: # 项目设置
+    name: goshop
+  mvc: # 配置Spring MVC
+    servlet:
+      path: /
+  datasource: # 配置数据库
+    url: jdbc:mysql://localhost:3306/goshop
+    username: root
+    password: 112233789xX@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# 设置服务器
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 30m
+
+
+
+
+
+
+
