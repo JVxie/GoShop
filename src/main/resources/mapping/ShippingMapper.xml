@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jvxie.goshop.mapper.ShippingMapper">
+  <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.Shipping">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shipping_id" jdbcType="VARCHAR" property="shippingId" />
+    <result column="shipping_name" jdbcType="VARCHAR" property="shippingName" />
+    <result column="shipping_phone" jdbcType="INTEGER" property="shippingPhone" />
+    <result column="shipping_province" jdbcType="VARCHAR" property="shippingProvince" />
+    <result column="shipping_city" jdbcType="VARCHAR" property="shippingCity" />
+    <result column="shipping_distrct" jdbcType="VARCHAR" property="shippingDistrct" />
+    <result column="shipping_address" jdbcType="VARCHAR" property="shippingAddress" />
+    <result column="shipping_zip" jdbcType="INTEGER" property="shippingZip" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shipping_id, shipping_name, shipping_phone, shipping_province, shipping_city, 
+    shipping_distrct, shipping_address, shipping_zip, create_time, update_time, delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shipping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shipping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jvxie.goshop.model.Shipping">
+    insert into shipping (id, shipping_id, shipping_name, 
+      shipping_phone, shipping_province, shipping_city, 
+      shipping_distrct, shipping_address, shipping_zip, 
+      create_time, update_time, delete_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{shippingId,jdbcType=VARCHAR}, #{shippingName,jdbcType=VARCHAR}, 
+      #{shippingPhone,jdbcType=INTEGER}, #{shippingProvince,jdbcType=VARCHAR}, #{shippingCity,jdbcType=VARCHAR}, 
+      #{shippingDistrct,jdbcType=VARCHAR}, #{shippingAddress,jdbcType=VARCHAR}, #{shippingZip,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jvxie.goshop.model.Shipping">
+    insert into shipping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shippingId != null">
+        shipping_id,
+      </if>
+      <if test="shippingName != null">
+        shipping_name,
+      </if>
+      <if test="shippingPhone != null">
+        shipping_phone,
+      </if>
+      <if test="shippingProvince != null">
+        shipping_province,
+      </if>
+      <if test="shippingCity != null">
+        shipping_city,
+      </if>
+      <if test="shippingDistrct != null">
+        shipping_distrct,
+      </if>
+      <if test="shippingAddress != null">
+        shipping_address,
+      </if>
+      <if test="shippingZip != null">
+        shipping_zip,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shippingId != null">
+        #{shippingId,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingName != null">
+        #{shippingName,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingPhone != null">
+        #{shippingPhone,jdbcType=INTEGER},
+      </if>
+      <if test="shippingProvince != null">
+        #{shippingProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingCity != null">
+        #{shippingCity,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingDistrct != null">
+        #{shippingDistrct,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingAddress != null">
+        #{shippingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingZip != null">
+        #{shippingZip,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jvxie.goshop.model.Shipping">
+    update shipping
+    <set>
+      <if test="shippingId != null">
+        shipping_id = #{shippingId,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingName != null">
+        shipping_name = #{shippingName,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingPhone != null">
+        shipping_phone = #{shippingPhone,jdbcType=INTEGER},
+      </if>
+      <if test="shippingProvince != null">
+        shipping_province = #{shippingProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingCity != null">
+        shipping_city = #{shippingCity,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingDistrct != null">
+        shipping_distrct = #{shippingDistrct,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingAddress != null">
+        shipping_address = #{shippingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingZip != null">
+        shipping_zip = #{shippingZip,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.Shipping">
+    update shipping
+    set shipping_id = #{shippingId,jdbcType=VARCHAR},
+      shipping_name = #{shippingName,jdbcType=VARCHAR},
+      shipping_phone = #{shippingPhone,jdbcType=INTEGER},
+      shipping_province = #{shippingProvince,jdbcType=VARCHAR},
+      shipping_city = #{shippingCity,jdbcType=VARCHAR},
+      shipping_distrct = #{shippingDistrct,jdbcType=VARCHAR},
+      shipping_address = #{shippingAddress,jdbcType=VARCHAR},
+      shipping_zip = #{shippingZip,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

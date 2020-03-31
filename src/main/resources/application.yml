@@ -5,7 +5,7 @@ spring:
     servlet:
       path: /
   datasource: # 配置数据库
-    url: jdbc:mysql://localhost:3306/goshop
+    url: jdbc:mysql://localhost:3306/goshop?characterEncoding=utf-8
     username: root
     password: 112233789xX@
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,9 +17,8 @@ server:
     session:
       timeout: 30m
 
-
-
-
-
-
-
+#配置mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapping/*.xml

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jvxie.goshop.mapper.GoodsTypeMapper">
+  <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.GoodsType">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_type_id" jdbcType="VARCHAR" property="goodsTypeId" />
+    <result column="parent_type_id" jdbcType="VARCHAR" property="parentTypeId" />
+    <result column="goods_type_status" jdbcType="INTEGER" property="goodsTypeStatus" />
+    <result column="goods_type_sort" jdbcType="INTEGER" property="goodsTypeSort" />
+    <result column="type_icon_class" jdbcType="VARCHAR" property="typeIconClass" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_type_id, parent_type_id, goods_type_status, goods_type_sort, type_icon_class, 
+    create_time, update_time, delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jvxie.goshop.model.GoodsType">
+    insert into goods_type (id, goods_type_id, parent_type_id, 
+      goods_type_status, goods_type_sort, type_icon_class, 
+      create_time, update_time, delete_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodsTypeId,jdbcType=VARCHAR}, #{parentTypeId,jdbcType=VARCHAR}, 
+      #{goodsTypeStatus,jdbcType=INTEGER}, #{goodsTypeSort,jdbcType=INTEGER}, #{typeIconClass,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jvxie.goshop.model.GoodsType">
+    insert into goods_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsTypeId != null">
+        goods_type_id,
+      </if>
+      <if test="parentTypeId != null">
+        parent_type_id,
+      </if>
+      <if test="goodsTypeStatus != null">
+        goods_type_status,
+      </if>
+      <if test="goodsTypeSort != null">
+        goods_type_sort,
+      </if>
+      <if test="typeIconClass != null">
+        type_icon_class,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTypeId != null">
+        #{goodsTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentTypeId != null">
+        #{parentTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeStatus != null">
+        #{goodsTypeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTypeSort != null">
+        #{goodsTypeSort,jdbcType=INTEGER},
+      </if>
+      <if test="typeIconClass != null">
+        #{typeIconClass,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jvxie.goshop.model.GoodsType">
+    update goods_type
+    <set>
+      <if test="goodsTypeId != null">
+        goods_type_id = #{goodsTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentTypeId != null">
+        parent_type_id = #{parentTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeStatus != null">
+        goods_type_status = #{goodsTypeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTypeSort != null">
+        goods_type_sort = #{goodsTypeSort,jdbcType=INTEGER},
+      </if>
+      <if test="typeIconClass != null">
+        type_icon_class = #{typeIconClass,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.GoodsType">
+    update goods_type
+    set goods_type_id = #{goodsTypeId,jdbcType=VARCHAR},
+      parent_type_id = #{parentTypeId,jdbcType=VARCHAR},
+      goods_type_status = #{goodsTypeStatus,jdbcType=INTEGER},
+      goods_type_sort = #{goodsTypeSort,jdbcType=INTEGER},
+      type_icon_class = #{typeIconClass,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jvxie.goshop.mapper.UserOrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.UserOrderInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_info_id" jdbcType="VARCHAR" property="orderInfoId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="orign_goods_id" jdbcType="VARCHAR" property="orignGoodsId" />
+    <result column="order_count" jdbcType="INTEGER" property="orderCount" />
+    <result column="orign_goods_price" jdbcType="DECIMAL" property="orignGoodsPrice" />
+    <result column="orign_goods_title" jdbcType="VARCHAR" property="orignGoodsTitle" />
+    <result column="orign_goods_img" jdbcType="VARCHAR" property="orignGoodsImg" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_info_id, order_id, orign_goods_id, order_count, orign_goods_price, orign_goods_title, 
+    orign_goods_img, create_time, update_time, delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_order_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_order_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jvxie.goshop.model.UserOrderInfo">
+    insert into user_order_info (id, order_info_id, order_id, 
+      orign_goods_id, order_count, orign_goods_price, 
+      orign_goods_title, orign_goods_img, create_time, 
+      update_time, delete_time)
+    values (#{id,jdbcType=INTEGER}, #{orderInfoId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{orignGoodsId,jdbcType=VARCHAR}, #{orderCount,jdbcType=INTEGER}, #{orignGoodsPrice,jdbcType=DECIMAL}, 
+      #{orignGoodsTitle,jdbcType=VARCHAR}, #{orignGoodsImg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jvxie.goshop.model.UserOrderInfo">
+    insert into user_order_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderInfoId != null">
+        order_info_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orignGoodsId != null">
+        orign_goods_id,
+      </if>
+      <if test="orderCount != null">
+        order_count,
+      </if>
+      <if test="orignGoodsPrice != null">
+        orign_goods_price,
+      </if>
+      <if test="orignGoodsTitle != null">
+        orign_goods_title,
+      </if>
+      <if test="orignGoodsImg != null">
+        orign_goods_img,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderInfoId != null">
+        #{orderInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orignGoodsId != null">
+        #{orignGoodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCount != null">
+        #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orignGoodsPrice != null">
+        #{orignGoodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orignGoodsTitle != null">
+        #{orignGoodsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orignGoodsImg != null">
+        #{orignGoodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jvxie.goshop.model.UserOrderInfo">
+    update user_order_info
+    <set>
+      <if test="orderInfoId != null">
+        order_info_id = #{orderInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orignGoodsId != null">
+        orign_goods_id = #{orignGoodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCount != null">
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orignGoodsPrice != null">
+        orign_goods_price = #{orignGoodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orignGoodsTitle != null">
+        orign_goods_title = #{orignGoodsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orignGoodsImg != null">
+        orign_goods_img = #{orignGoodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.UserOrderInfo">
+    update user_order_info
+    set order_info_id = #{orderInfoId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      orign_goods_id = #{orignGoodsId,jdbcType=VARCHAR},
+      order_count = #{orderCount,jdbcType=INTEGER},
+      orign_goods_price = #{orignGoodsPrice,jdbcType=DECIMAL},
+      orign_goods_title = #{orignGoodsTitle,jdbcType=VARCHAR},
+      orign_goods_img = #{orignGoodsImg,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
