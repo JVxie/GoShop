@@ -5,10 +5,13 @@ spring:
     servlet:
       path: /
   datasource: # 配置数据库
-    url: jdbc:mysql://localhost:3306/goshop?characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/goshop?characterEncoding=utf-8&time_zone=+8:00
     username: root
     password: 112233789xX@
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson: # 配置jackson 自动转下划线，空指针不传输
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_null
 
 # 设置服务器
 server:
@@ -21,4 +24,7 @@ server:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapping/*.xml
+
+

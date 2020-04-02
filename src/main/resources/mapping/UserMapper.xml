@@ -3,16 +3,16 @@
 <mapper namespace="com.jvxie.goshop.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_psw" jdbcType="VARCHAR" property="userPsw" />
     <result column="user_group_id" jdbcType="INTEGER" property="userGroupId" />
+    <result column="user_sex" jdbcType="INTEGER" property="userSex" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
-    <result column="user_phone" jdbcType="INTEGER" property="userPhone" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
     <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
     <result column="user_question" jdbcType="VARCHAR" property="userQuestion" />
     <result column="user_answer" jdbcType="VARCHAR" property="userAnswer" />
-    <result column="user_sex" jdbcType="INTEGER" property="userSex" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -20,8 +20,8 @@
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, user_name, user_psw, user_group_id, real_name, user_phone, user_email, 
-    user_question, user_answer, user_sex, last_login_time, last_login_ip, create_time, 
+    id, user_id, user_name, user_psw, user_group_id, user_sex, real_name, user_phone, 
+    user_email, user_question, user_answer, last_login_time, last_login_ip, create_time, 
     update_time, delete_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -30,30 +30,39 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="countByUserEmail" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    count(1)
+    from user
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
+  <select id="countByUserPhone" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    count(1)
+    from user
+    where user_phone = #{userPhone,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jvxie.goshop.model.User">
-    insert into user (id, user_id, user_name, 
-      user_psw, user_group_id, real_name, 
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.User" useGeneratedKeys="true">
+    insert into user (user_id, user_name, user_psw, 
+      user_group_id, user_sex, real_name, 
       user_phone, user_email, user_question, 
-      user_answer, user_sex, last_login_time, 
-      last_login_ip, create_time, update_time, 
-      delete_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userPsw,jdbcType=VARCHAR}, #{userGroupId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, 
-      #{userPhone,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, #{userQuestion,jdbcType=VARCHAR}, 
-      #{userAnswer,jdbcType=VARCHAR}, #{userSex,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
-      #{lastLoginIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleteTime,jdbcType=TIMESTAMP})
+      user_answer, last_login_time, last_login_ip, 
+      create_time, update_time, delete_time
+      )
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPsw,jdbcType=VARCHAR}, 
+      #{userGroupId,jdbcType=INTEGER}, #{userSex,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userQuestion,jdbcType=VARCHAR}, 
+      #{userAnswer,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.jvxie.goshop.model.User">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.User" useGeneratedKeys="true">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="userId != null">
         user_id,
       </if>
@@ -65,6 +74,9 @@
       </if>
       <if test="userGroupId != null">
         user_group_id,
+      </if>
+      <if test="userSex != null">
+        user_sex,
       </if>
       <if test="realName != null">
         real_name,
@@ -80,9 +92,6 @@
       </if>
       <if test="userAnswer != null">
         user_answer,
-      </if>
-      <if test="userSex != null">
-        user_sex,
       </if>
       <if test="lastLoginTime != null">
         last_login_time,
@@ -101,11 +110,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
@@ -116,11 +122,14 @@
       <if test="userGroupId != null">
         #{userGroupId,jdbcType=INTEGER},
       </if>
+      <if test="userSex != null">
+        #{userSex,jdbcType=INTEGER},
+      </if>
       <if test="realName != null">
         #{realName,jdbcType=VARCHAR},
       </if>
       <if test="userPhone != null">
-        #{userPhone,jdbcType=INTEGER},
+        #{userPhone,jdbcType=VARCHAR},
       </if>
       <if test="userEmail != null">
         #{userEmail,jdbcType=VARCHAR},
@@ -130,9 +139,6 @@
       </if>
       <if test="userAnswer != null">
         #{userAnswer,jdbcType=VARCHAR},
-      </if>
-      <if test="userSex != null">
-        #{userSex,jdbcType=INTEGER},
       </if>
       <if test="lastLoginTime != null">
         #{lastLoginTime,jdbcType=TIMESTAMP},
@@ -155,7 +161,7 @@
     update user
     <set>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
       <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
@@ -166,11 +172,14 @@
       <if test="userGroupId != null">
         user_group_id = #{userGroupId,jdbcType=INTEGER},
       </if>
+      <if test="userSex != null">
+        user_sex = #{userSex,jdbcType=INTEGER},
+      </if>
       <if test="realName != null">
         real_name = #{realName,jdbcType=VARCHAR},
       </if>
       <if test="userPhone != null">
-        user_phone = #{userPhone,jdbcType=INTEGER},
+        user_phone = #{userPhone,jdbcType=VARCHAR},
       </if>
       <if test="userEmail != null">
         user_email = #{userEmail,jdbcType=VARCHAR},
@@ -180,9 +189,6 @@
       </if>
       <if test="userAnswer != null">
         user_answer = #{userAnswer,jdbcType=VARCHAR},
-      </if>
-      <if test="userSex != null">
-        user_sex = #{userSex,jdbcType=INTEGER},
       </if>
       <if test="lastLoginTime != null">
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
@@ -204,16 +210,16 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.User">
     update user
-    set user_id = #{userId,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=BIGINT},
       user_name = #{userName,jdbcType=VARCHAR},
       user_psw = #{userPsw,jdbcType=VARCHAR},
       user_group_id = #{userGroupId,jdbcType=INTEGER},
+      user_sex = #{userSex,jdbcType=INTEGER},
       real_name = #{realName,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
       user_email = #{userEmail,jdbcType=VARCHAR},
       user_question = #{userQuestion,jdbcType=VARCHAR},
       user_answer = #{userAnswer,jdbcType=VARCHAR},
-      user_sex = #{userSex,jdbcType=INTEGER},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

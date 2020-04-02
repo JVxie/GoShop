@@ -3,7 +3,7 @@
 <mapper namespace="com.jvxie.goshop.mapper.UserOrderInfoMapper">
   <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.UserOrderInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="order_info_id" jdbcType="VARCHAR" property="orderInfoId" />
+    <result column="order_info_id" jdbcType="BIGINT" property="orderInfoId" />
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="orign_goods_id" jdbcType="VARCHAR" property="orignGoodsId" />
     <result column="order_count" jdbcType="INTEGER" property="orderCount" />
@@ -28,22 +28,19 @@
     delete from user_order_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jvxie.goshop.model.UserOrderInfo">
-    insert into user_order_info (id, order_info_id, order_id, 
-      orign_goods_id, order_count, orign_goods_price, 
-      orign_goods_title, orign_goods_img, create_time, 
-      update_time, delete_time)
-    values (#{id,jdbcType=INTEGER}, #{orderInfoId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
-      #{orignGoodsId,jdbcType=VARCHAR}, #{orderCount,jdbcType=INTEGER}, #{orignGoodsPrice,jdbcType=DECIMAL}, 
-      #{orignGoodsTitle,jdbcType=VARCHAR}, #{orignGoodsImg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.UserOrderInfo" useGeneratedKeys="true">
+    insert into user_order_info (order_info_id, order_id, orign_goods_id, 
+      order_count, orign_goods_price, orign_goods_title, 
+      orign_goods_img, create_time, update_time, 
+      delete_time)
+    values (#{orderInfoId,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{orignGoodsId,jdbcType=VARCHAR}, 
+      #{orderCount,jdbcType=INTEGER}, #{orignGoodsPrice,jdbcType=DECIMAL}, #{orignGoodsTitle,jdbcType=VARCHAR}, 
+      #{orignGoodsImg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jvxie.goshop.model.UserOrderInfo">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.UserOrderInfo" useGeneratedKeys="true">
     insert into user_order_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="orderInfoId != null">
         order_info_id,
       </if>
@@ -76,11 +73,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="orderInfoId != null">
-        #{orderInfoId,jdbcType=VARCHAR},
+        #{orderInfoId,jdbcType=BIGINT},
       </if>
       <if test="orderId != null">
         #{orderId,jdbcType=VARCHAR},
@@ -115,7 +109,7 @@
     update user_order_info
     <set>
       <if test="orderInfoId != null">
-        order_info_id = #{orderInfoId,jdbcType=VARCHAR},
+        order_info_id = #{orderInfoId,jdbcType=BIGINT},
       </if>
       <if test="orderId != null">
         order_id = #{orderId,jdbcType=VARCHAR},
@@ -149,7 +143,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.UserOrderInfo">
     update user_order_info
-    set order_info_id = #{orderInfoId,jdbcType=VARCHAR},
+    set order_info_id = #{orderInfoId,jdbcType=BIGINT},
       order_id = #{orderId,jdbcType=VARCHAR},
       orign_goods_id = #{orignGoodsId,jdbcType=VARCHAR},
       order_count = #{orderCount,jdbcType=INTEGER},

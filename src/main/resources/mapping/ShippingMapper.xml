@@ -3,7 +3,7 @@
 <mapper namespace="com.jvxie.goshop.mapper.ShippingMapper">
   <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.Shipping">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="shipping_id" jdbcType="VARCHAR" property="shippingId" />
+    <result column="shipping_id" jdbcType="BIGINT" property="shippingId" />
     <result column="shipping_name" jdbcType="VARCHAR" property="shippingName" />
     <result column="shipping_phone" jdbcType="INTEGER" property="shippingPhone" />
     <result column="shipping_province" jdbcType="VARCHAR" property="shippingProvince" />
@@ -29,24 +29,19 @@
     delete from shipping
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jvxie.goshop.model.Shipping">
-    insert into shipping (id, shipping_id, shipping_name, 
-      shipping_phone, shipping_province, shipping_city, 
-      shipping_distrct, shipping_address, shipping_zip, 
-      create_time, update_time, delete_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{shippingId,jdbcType=VARCHAR}, #{shippingName,jdbcType=VARCHAR}, 
-      #{shippingPhone,jdbcType=INTEGER}, #{shippingProvince,jdbcType=VARCHAR}, #{shippingCity,jdbcType=VARCHAR}, 
-      #{shippingDistrct,jdbcType=VARCHAR}, #{shippingAddress,jdbcType=VARCHAR}, #{shippingZip,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.Shipping" useGeneratedKeys="true">
+    insert into shipping (shipping_id, shipping_name, shipping_phone, 
+      shipping_province, shipping_city, shipping_distrct, 
+      shipping_address, shipping_zip, create_time, 
+      update_time, delete_time)
+    values (#{shippingId,jdbcType=BIGINT}, #{shippingName,jdbcType=VARCHAR}, #{shippingPhone,jdbcType=INTEGER}, 
+      #{shippingProvince,jdbcType=VARCHAR}, #{shippingCity,jdbcType=VARCHAR}, #{shippingDistrct,jdbcType=VARCHAR}, 
+      #{shippingAddress,jdbcType=VARCHAR}, #{shippingZip,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jvxie.goshop.model.Shipping">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.Shipping" useGeneratedKeys="true">
     insert into shipping
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="shippingId != null">
         shipping_id,
       </if>
@@ -82,11 +77,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="shippingId != null">
-        #{shippingId,jdbcType=VARCHAR},
+        #{shippingId,jdbcType=BIGINT},
       </if>
       <if test="shippingName != null">
         #{shippingName,jdbcType=VARCHAR},
@@ -124,7 +116,7 @@
     update shipping
     <set>
       <if test="shippingId != null">
-        shipping_id = #{shippingId,jdbcType=VARCHAR},
+        shipping_id = #{shippingId,jdbcType=BIGINT},
       </if>
       <if test="shippingName != null">
         shipping_name = #{shippingName,jdbcType=VARCHAR},
@@ -161,7 +153,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.Shipping">
     update shipping
-    set shipping_id = #{shippingId,jdbcType=VARCHAR},
+    set shipping_id = #{shippingId,jdbcType=BIGINT},
       shipping_name = #{shippingName,jdbcType=VARCHAR},
       shipping_phone = #{shippingPhone,jdbcType=INTEGER},
       shipping_province = #{shippingProvince,jdbcType=VARCHAR},

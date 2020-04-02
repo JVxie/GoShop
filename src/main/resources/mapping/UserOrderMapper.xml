@@ -3,7 +3,7 @@
 <mapper namespace="com.jvxie.goshop.mapper.UserOrderMapper">
   <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.UserOrder">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="shipping_id" jdbcType="VARCHAR" property="shippingId" />
     <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
@@ -35,26 +35,23 @@
     delete from user_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jvxie.goshop.model.UserOrder">
-    insert into user_order (id, order_id, user_id, 
-      shipping_id, order_time, order_pay_time, 
-      order_send_time, order_end_time, order_close_time, 
-      order_pay_type, order_all_cost, order_real_cost, 
-      order_discount, order_status, create_time, 
-      update_time, delete_time)
-    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{shippingId,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{orderPayTime,jdbcType=TIMESTAMP}, 
-      #{orderSendTime,jdbcType=TIMESTAMP}, #{orderEndTime,jdbcType=TIMESTAMP}, #{orderCloseTime,jdbcType=TIMESTAMP}, 
-      #{orderPayType,jdbcType=INTEGER}, #{orderAllCost,jdbcType=DECIMAL}, #{orderRealCost,jdbcType=DECIMAL}, 
-      #{orderDiscount,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.UserOrder" useGeneratedKeys="true">
+    insert into user_order (order_id, user_id, shipping_id, 
+      order_time, order_pay_time, order_send_time, 
+      order_end_time, order_close_time, order_pay_type, 
+      order_all_cost, order_real_cost, order_discount, 
+      order_status, create_time, update_time, 
+      delete_time)
+    values (#{orderId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{shippingId,jdbcType=VARCHAR}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{orderPayTime,jdbcType=TIMESTAMP}, #{orderSendTime,jdbcType=TIMESTAMP}, 
+      #{orderEndTime,jdbcType=TIMESTAMP}, #{orderCloseTime,jdbcType=TIMESTAMP}, #{orderPayType,jdbcType=INTEGER}, 
+      #{orderAllCost,jdbcType=DECIMAL}, #{orderRealCost,jdbcType=DECIMAL}, #{orderDiscount,jdbcType=DECIMAL}, 
+      #{orderStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jvxie.goshop.model.UserOrder">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.UserOrder" useGeneratedKeys="true">
     insert into user_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="orderId != null">
         order_id,
       </if>
@@ -105,11 +102,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="orderId != null">
-        #{orderId,jdbcType=VARCHAR},
+        #{orderId,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
@@ -162,7 +156,7 @@
     update user_order
     <set>
       <if test="orderId != null">
-        order_id = #{orderId,jdbcType=VARCHAR},
+        order_id = #{orderId,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
@@ -214,7 +208,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.UserOrder">
     update user_order
-    set order_id = #{orderId,jdbcType=VARCHAR},
+    set order_id = #{orderId,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=VARCHAR},
       shipping_id = #{shippingId,jdbcType=VARCHAR},
       order_time = #{orderTime,jdbcType=TIMESTAMP},
