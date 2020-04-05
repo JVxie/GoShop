@@ -11,6 +11,7 @@ public enum ResponseEnum {
     USER_EMAIL_EXIST(3, "邮箱已注册"),
     NEED_LOGIN(10, "用户未登录，请先登录"),
     PARAM_ERROR(11, "参数错误"),
+    LOGINNAME_OR_PASSWORD_ERROR(12, "登录名或密码错误"),
     ;
 
     Integer code;

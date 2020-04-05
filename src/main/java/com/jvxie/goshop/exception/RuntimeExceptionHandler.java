@@ -5,6 +5,11 @@ import com.jvxie.goshop.vo.ResponseVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 用于捕获运行错误
+ * 返回Json
+ */
+
 @ControllerAdvice
 public class RuntimeExceptionHandler {
     @ExceptionHandler(RuntimeException.class) // 捕获异常

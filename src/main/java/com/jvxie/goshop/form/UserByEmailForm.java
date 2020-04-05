@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserByEmailFrom extends UserFrom {
+public class UserByEmailForm extends UserFrom {
     @Email(message = "邮箱地址填写错误")
     @NotBlank(message = "邮箱地址不能为空")
     private String userEmail;

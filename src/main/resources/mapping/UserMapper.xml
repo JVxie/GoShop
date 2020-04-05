@@ -42,6 +42,18 @@
     from user
     where user_phone = #{userPhone,jdbcType=VARCHAR}
   </select>
+  <select id="selectByUserEmail" resultType="com.jvxie.goshop.model.User">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserPhone" resultType="com.jvxie.goshop.model.User">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_phone = #{userPhone,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}

@@ -16,9 +16,6 @@ spring:
 # 设置服务器
 server:
   port: 8080
-  servlet:
-    session:
-      timeout: 30m
 
 #配置mybatis
 mybatis:
@@ -26,5 +23,11 @@ mybatis:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapping/*.xml
+
+#分页pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
 
 

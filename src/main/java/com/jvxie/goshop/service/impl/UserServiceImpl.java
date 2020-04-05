@@ -1,6 +1,7 @@
 package com.jvxie.goshop.service.impl;
 
 import com.jvxie.goshop.enums.IdGeneratorEnum;
+import com.jvxie.goshop.enums.ResponseEnum;
 import com.jvxie.goshop.enums.UserGroupEnum;
 import com.jvxie.goshop.mapper.UserMapper;
 import com.jvxie.goshop.model.User;
@@ -79,6 +80,30 @@ public class UserServiceImpl implements IUserService {
             return ResponseVo.error(ERROR);
         }
         return ResponseVo.success();
+    }
+
+    @Override
+    public ResponseVo loginByEmail(String userEmail, String userPsw) {
+        User user = userMapper.selectByUserEmail(userEmail);
+        if (user == null ||
+                user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
+            // 用户不存在 或 密码错误 均返回（登录名或密码错误)
+            return ResponseVo.error(LOGINNAME_OR_PASSWORD_ERROR);
+        }
+        user.setUserPsw(""); user.setUserId(null);
+        return ResponseVo.success(user);
+    }
+
+    @Override
+    public ResponseVo loginByPhone(String userPhone, String userPsw) {
+        User user = userMapper.selectByUserPhone(userPhone);
+        if (user == null ||
+                user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
+            // 用户不存在 或 密码错误 均返回（登录名或密码错误)
+            return ResponseVo.error(LOGINNAME_OR_PASSWORD_ERROR);
+        }
+        user.setUserPsw(""); user.setUserId(null);
+        return ResponseVo.success(user);
     }
 
 }

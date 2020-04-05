@@ -18,4 +18,8 @@ public interface UserMapper {
     int countByUserEmail(String userEmail);
 
     int countByUserPhone(String userPhone);
+
+    User selectByUserEmail(String userEmail);
+
+    User selectByUserPhone(String userPhone);
 }

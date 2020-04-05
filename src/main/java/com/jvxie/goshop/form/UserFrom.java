@@ -1,7 +1,6 @@
 package com.jvxie.goshop.form;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 
@@ -13,7 +12,4 @@ public class UserFrom {
     @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$", message = "密码只能包含数字和可见字符，且长度在6~18之间")
     private String userPsw;
 
-    @Max(value = 3, message = "性别选择错误")
-    @Min(value = 1, message = "性别选择错误")
-    private Integer userSex;
 }

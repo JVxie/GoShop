@@ -20,8 +20,17 @@ public class ResponseVo<T> {
         this.msg = msg;
     }
 
-    public static <T> ResponseVo<T> success(String msg) {
+    public ResponseVo(Integer status, T data) {
+        this.status = status;
+        this.data = data;
+    }
+
+    public static <T> ResponseVo<T> successByMsg(String msg) {
         return new ResponseVo<T>(ResponseEnum.SUCCESS.getCode(), msg);
+    }
+
+    public static <T> ResponseVo<T> success(T data) {
+        return new ResponseVo<T>(ResponseEnum.SUCCESS.getCode(), data);
     }
 
     public static <T> ResponseVo<T> success() {
