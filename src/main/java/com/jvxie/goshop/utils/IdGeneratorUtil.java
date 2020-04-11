@@ -1,4 +1,4 @@
-package com.jvxie.goshop.plugin;
+package com.jvxie.goshop.utils;
 
 import com.jvxie.goshop.enums.IdGeneratorEnum;
 
@@ -16,7 +16,7 @@ import com.jvxie.goshop.enums.IdGeneratorEnum;
  * 0，8：user_order_pay表
  */
 
-public class IdGenerator {
+public class IdGeneratorUtil {
 
     // ==============================Fields===========================================
     /** 开始时间截 (2015-01-01) */
@@ -67,7 +67,7 @@ public class IdGenerator {
      * @param workerId 工作ID (0~31)
      * @param datacenterId 数据中心ID (0~31)
      */
-    public IdGenerator(long workerId, long datacenterId) {
+    public IdGeneratorUtil(long workerId, long datacenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
         }
@@ -78,7 +78,7 @@ public class IdGenerator {
         this.datacenterId = datacenterId;
     }
 
-    public IdGenerator(IdGeneratorEnum idGeneratorEnum) {
+    public IdGeneratorUtil(IdGeneratorEnum idGeneratorEnum) {
         long workerId = idGeneratorEnum.getWorkerId();
         long datacenterId = idGeneratorEnum.getDatacenterId();
         if (workerId > maxWorkerId || workerId < 0) {

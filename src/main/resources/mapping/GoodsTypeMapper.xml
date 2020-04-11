@@ -4,7 +4,8 @@
   <resultMap id="BaseResultMap" type="com.jvxie.goshop.model.GoodsType">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="goods_type_id" jdbcType="BIGINT" property="goodsTypeId" />
-    <result column="parent_type_id" jdbcType="VARCHAR" property="parentTypeId" />
+    <result column="parent_type_id" jdbcType="BIGINT" property="parentTypeId" />
+    <result column="goods_type_name" jdbcType="VARCHAR" property="goodsTypeName" />
     <result column="goods_type_status" jdbcType="INTEGER" property="goodsTypeStatus" />
     <result column="goods_type_sort" jdbcType="INTEGER" property="goodsTypeSort" />
     <result column="type_icon_class" jdbcType="VARCHAR" property="typeIconClass" />
@@ -13,8 +14,8 @@
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_type_id, parent_type_id, goods_type_status, goods_type_sort, type_icon_class, 
-    create_time, update_time, delete_time
+    id, goods_type_id, parent_type_id, goods_type_name, goods_type_status, goods_type_sort, 
+    type_icon_class, create_time, update_time, delete_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -22,17 +23,25 @@
     from goods_type
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultType="com.jvxie.goshop.model.GoodsType">
+    select
+    <include refid="Base_Column_List" />
+    from goods_type
+    where goods_type_status = 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from goods_type
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.GoodsType" useGeneratedKeys="true">
-    insert into goods_type (goods_type_id, parent_type_id, goods_type_status, 
-      goods_type_sort, type_icon_class, create_time, 
-      update_time, delete_time)
-    values (#{goodsTypeId,jdbcType=BIGINT}, #{parentTypeId,jdbcType=VARCHAR}, #{goodsTypeStatus,jdbcType=INTEGER}, 
-      #{goodsTypeSort,jdbcType=INTEGER}, #{typeIconClass,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
+    insert into goods_type (goods_type_id, parent_type_id, goods_type_name, 
+      goods_type_status, goods_type_sort, type_icon_class, 
+      create_time, update_time, delete_time
+      )
+    values (#{goodsTypeId,jdbcType=BIGINT}, #{parentTypeId,jdbcType=BIGINT}, #{goodsTypeName,jdbcType=VARCHAR}, 
+      #{goodsTypeStatus,jdbcType=INTEGER}, #{goodsTypeSort,jdbcType=INTEGER}, #{typeIconClass,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.GoodsType" useGeneratedKeys="true">
     insert into goods_type
@@ -42,6 +51,9 @@
       </if>
       <if test="parentTypeId != null">
         parent_type_id,
+      </if>
+      <if test="goodsTypeName != null">
+        goods_type_name,
       </if>
       <if test="goodsTypeStatus != null">
         goods_type_status,
@@ -67,7 +79,10 @@
         #{goodsTypeId,jdbcType=BIGINT},
       </if>
       <if test="parentTypeId != null">
-        #{parentTypeId,jdbcType=VARCHAR},
+        #{parentTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsTypeName != null">
+        #{goodsTypeName,jdbcType=VARCHAR},
       </if>
       <if test="goodsTypeStatus != null">
         #{goodsTypeStatus,jdbcType=INTEGER},
@@ -96,7 +111,10 @@
         goods_type_id = #{goodsTypeId,jdbcType=BIGINT},
       </if>
       <if test="parentTypeId != null">
-        parent_type_id = #{parentTypeId,jdbcType=VARCHAR},
+        parent_type_id = #{parentTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsTypeName != null">
+        goods_type_name = #{goodsTypeName,jdbcType=VARCHAR},
       </if>
       <if test="goodsTypeStatus != null">
         goods_type_status = #{goodsTypeStatus,jdbcType=INTEGER},
@@ -122,7 +140,8 @@
   <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.GoodsType">
     update goods_type
     set goods_type_id = #{goodsTypeId,jdbcType=BIGINT},
-      parent_type_id = #{parentTypeId,jdbcType=VARCHAR},
+      parent_type_id = #{parentTypeId,jdbcType=BIGINT},
+      goods_type_name = #{goodsTypeName,jdbcType=VARCHAR},
       goods_type_status = #{goodsTypeStatus,jdbcType=INTEGER},
       goods_type_sort = #{goodsTypeSort,jdbcType=INTEGER},
       type_icon_class = #{typeIconClass,jdbcType=VARCHAR},

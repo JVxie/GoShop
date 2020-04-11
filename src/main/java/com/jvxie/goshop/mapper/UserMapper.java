@@ -22,4 +22,6 @@ public interface UserMapper {
     User selectByUserEmail(String userEmail);
 
     User selectByUserPhone(String userPhone);
+
+    User selectByUserId(Long userId);
 }

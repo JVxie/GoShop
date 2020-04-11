@@ -12,6 +12,7 @@ public enum ResponseEnum {
     NEED_LOGIN(10, "用户未登录，请先登录"),
     PARAM_ERROR(11, "参数错误"),
     LOGINNAME_OR_PASSWORD_ERROR(12, "登录名或密码错误"),
+    USER_NOT_FOUND(13, "用户不存在"),
     ;
 
     Integer code;

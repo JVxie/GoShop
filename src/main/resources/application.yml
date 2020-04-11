@@ -9,25 +9,38 @@ spring:
     username: root
     password: 112233789xX@
     driver-class-name: com.mysql.cj.jdbc.Driver
-  jackson: # 配置jackson 自动转下划线，空指针不传输
+  jackson: # 配置jackson 自动转下划线
     property-naming-strategy: SNAKE_CASE
-    default-property-inclusion: non_null
+  redis: # 配置Redis
+    host: localhost
+    database: 0
+    port: 6379
 
 # 设置服务器
 server:
   port: 8080
+  servlet:
+    session:
+      timeout:
 
-#配置mybatis
+# 配置mybatis
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapping/*.xml
 
-#分页pageHelper
+# 分页pageHelper
 pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
+
+# 配置控制台输出
+logging:
+  pattern:
+    console: "[%thread] %-5level %logger{36} - %msg%n"
+
+
 
 

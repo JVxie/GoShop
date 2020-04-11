@@ -9,7 +9,8 @@ public enum IdGeneratorEnum {
     USER_GROUP(0, 5),
     USER_ORDER(0, 6),
     USER_ORDER_INFO(0, 7),
-    USER_ORDER_PAY(0, 8)
+    USER_ORDER_PAY(0, 8),
+    TOKEN(0, 9),
     ;
 
     private long workerId;

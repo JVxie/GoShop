@@ -62,11 +62,13 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.13</version>
         </dependency>
+        <!-- lombok工具库 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.16</version>
         </dependency>
+        <!-- 引入jjwt -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -84,6 +86,12 @@
             <version>0.11.1</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- 集成Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

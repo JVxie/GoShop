@@ -1,11 +1,10 @@
 package com.jvxie.goshop.service.impl;
 
 import com.jvxie.goshop.enums.IdGeneratorEnum;
-import com.jvxie.goshop.enums.ResponseEnum;
 import com.jvxie.goshop.enums.UserGroupEnum;
 import com.jvxie.goshop.mapper.UserMapper;
 import com.jvxie.goshop.model.User;
-import com.jvxie.goshop.plugin.IdGenerator;
+import com.jvxie.goshop.utils.IdGeneratorUtil;
 import com.jvxie.goshop.service.IUserService;
 import com.jvxie.goshop.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResponseVo registerByEmail(User user) {
         // 生成user_id
-        IdGenerator idGenerator = new IdGenerator(IdGeneratorEnum.USER);
-        user.setUserId(idGenerator.nextId());
+        IdGeneratorUtil idGeneratorUtil = new IdGeneratorUtil(IdGeneratorEnum.USER);
+        user.setUserId(idGeneratorUtil.nextId());
 
         // 校验user_name是否为空
         if (user.getUserName() == null || user.getUserName().equals("")) {
@@ -55,8 +54,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResponseVo registerByPhone(User user) {
         // 生成user_id
-        IdGenerator idGenerator = new IdGenerator(IdGeneratorEnum.USER);
-        user.setUserId(idGenerator.nextId());
+        IdGeneratorUtil idGeneratorUtil = new IdGeneratorUtil(IdGeneratorEnum.USER);
+        user.setUserId(idGeneratorUtil.nextId());
 
         // 校验user_name
         if (user.getUserName() == null || user.getUserName().equals("")) {
@@ -71,7 +70,7 @@ public class UserServiceImpl implements IUserService {
         // MD5加密用户密码
         user.setUserPsw(DigestUtils.md5DigestAsHex(user.getUserPsw().getBytes(StandardCharsets.UTF_8)));
 
-        // 默认注册用户为1：
+        // 默认注册用户组为1：
         user.setUserGroupId(UserGroupEnum.CUSTOMER.getCode());
 
         // 写入数据库
@@ -90,7 +89,7 @@ public class UserServiceImpl implements IUserService {
             // 用户不存在 或 密码错误 均返回（登录名或密码错误)
             return ResponseVo.error(LOGINNAME_OR_PASSWORD_ERROR);
         }
-        user.setUserPsw(""); user.setUserId(null);
+        user.setUserPsw("");
         return ResponseVo.success(user);
     }
 
@@ -102,7 +101,15 @@ public class UserServiceImpl implements IUserService {
             // 用户不存在 或 密码错误 均返回（登录名或密码错误)
             return ResponseVo.error(LOGINNAME_OR_PASSWORD_ERROR);
         }
-        user.setUserPsw(""); user.setUserId(null);
+        user.setUserPsw("");
+        return ResponseVo.success(user);
+    }
+
+    @Override
+    public ResponseVo findByUserId(Long userId) {
+        User user = userMapper.selectByUserId(userId);
+        if (user == null) return ResponseVo.error(USER_NOT_FOUND);
+        user.setUserPsw("");
         return ResponseVo.success(user);
     }
 

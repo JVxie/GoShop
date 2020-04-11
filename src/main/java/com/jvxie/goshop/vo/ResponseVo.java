@@ -1,5 +1,8 @@
 package com.jvxie.goshop.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jvxie.goshop.enums.ResponseEnum;
 import lombok.Data;
 
@@ -9,6 +12,7 @@ import lombok.Data;
  */
 
 @Data
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class ResponseVo<T> {
 
     private Integer status;

@@ -18,4 +18,10 @@ public interface IUserService {
      */
     ResponseVo loginByEmail(String userEmail, String userPsw);
     ResponseVo loginByPhone(String userPhone, String userPsw);
+
+    /**
+     * 搜索功能
+     */
+    ResponseVo findByUserId(Long userId);
+
 }

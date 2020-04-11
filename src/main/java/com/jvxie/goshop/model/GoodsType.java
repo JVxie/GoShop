@@ -21,7 +21,12 @@ public class GoodsType implements Serializable {
     /**
      * 商品父类ID
      */
-    private String parentTypeId;
+    private Long parentTypeId;
+
+    /**
+     * 商品类型名称
+     */
+    private String goodsTypeName;
 
     /**
      * 状态，0：关闭，1：开启
@@ -71,12 +76,20 @@ public class GoodsType implements Serializable {
         this.goodsTypeId = goodsTypeId;
     }
 
-    public String getParentTypeId() {
+    public Long getParentTypeId() {
         return parentTypeId;
     }
 
-    public void setParentTypeId(String parentTypeId) {
+    public void setParentTypeId(Long parentTypeId) {
         this.parentTypeId = parentTypeId;
+    }
+
+    public String getGoodsTypeName() {
+        return goodsTypeName;
+    }
+
+    public void setGoodsTypeName(String goodsTypeName) {
+        this.goodsTypeName = goodsTypeName;
     }
 
     public Integer getGoodsTypeStatus() {
@@ -142,6 +155,7 @@ public class GoodsType implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getGoodsTypeId() == null ? other.getGoodsTypeId() == null : this.getGoodsTypeId().equals(other.getGoodsTypeId()))
             && (this.getParentTypeId() == null ? other.getParentTypeId() == null : this.getParentTypeId().equals(other.getParentTypeId()))
+            && (this.getGoodsTypeName() == null ? other.getGoodsTypeName() == null : this.getGoodsTypeName().equals(other.getGoodsTypeName()))
             && (this.getGoodsTypeStatus() == null ? other.getGoodsTypeStatus() == null : this.getGoodsTypeStatus().equals(other.getGoodsTypeStatus()))
             && (this.getGoodsTypeSort() == null ? other.getGoodsTypeSort() == null : this.getGoodsTypeSort().equals(other.getGoodsTypeSort()))
             && (this.getTypeIconClass() == null ? other.getTypeIconClass() == null : this.getTypeIconClass().equals(other.getTypeIconClass()))
@@ -157,6 +171,7 @@ public class GoodsType implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getGoodsTypeId() == null) ? 0 : getGoodsTypeId().hashCode());
         result = prime * result + ((getParentTypeId() == null) ? 0 : getParentTypeId().hashCode());
+        result = prime * result + ((getGoodsTypeName() == null) ? 0 : getGoodsTypeName().hashCode());
         result = prime * result + ((getGoodsTypeStatus() == null) ? 0 : getGoodsTypeStatus().hashCode());
         result = prime * result + ((getGoodsTypeSort() == null) ? 0 : getGoodsTypeSort().hashCode());
         result = prime * result + ((getTypeIconClass() == null) ? 0 : getTypeIconClass().hashCode());
@@ -175,6 +190,7 @@ public class GoodsType implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", goodsTypeId=").append(goodsTypeId);
         sb.append(", parentTypeId=").append(parentTypeId);
+        sb.append(", goodsTypeName=").append(goodsTypeName);
         sb.append(", goodsTypeStatus=").append(goodsTypeStatus);
         sb.append(", goodsTypeSort=").append(goodsTypeSort);
         sb.append(", typeIconClass=").append(typeIconClass);
