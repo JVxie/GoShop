@@ -15,10 +15,12 @@ import com.jvxie.goshop.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +40,7 @@ public class UserController {
     UserServiceImpl userService;
 
     @Autowired
+    @Qualifier("redisTemplateUser")
     StringRedisTemplate redisTemplate;
 
     @GetMapping("/user/register")
@@ -89,8 +92,7 @@ public class UserController {
             ret = userService.loginByEmail(userLoginFrom.getLoginName(), userLoginFrom.getUserPsw());
         }
         if (ret.getStatus().equals(SUCCESS_CODE)) {
-            // 登录成功
-//            session.setAttribute(CUSTOMER, ret.getData());
+            // 如果登录成功
             IdGeneratorUtil idGeneratorUtil = new IdGeneratorUtil(IdGeneratorEnum.TOKEN);
             User user = (User)ret.getData();
             // 生成TokenId
@@ -112,19 +114,24 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    private ResponseVo user(HttpServletRequest request) {
+    private ResponseVo user(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
-        String userId = redisTemplate.opsForValue().get(String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue()));
-         log.info("userId = {}", Long.valueOf(userId));
-
+        String userId = redisTemplate.opsForValue().get(
+                String.format( RedisConstants.TOKEN_PREFIX, cookie.getValue() )
+        );
         ResponseVo ret = userService.findByUserId(Long.valueOf(userId));
         return ret;
     }
 
     @GetMapping("/user/logout")
-    private ResponseVo logout(HttpSession session) {
-        User user = (User) session.getAttribute(CUSTOMER);
-        session.removeAttribute(CUSTOMER);
+    private ResponseVo logout(HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
+        // 清除Redis
+        redisTemplate.opsForValue().getOperations().delete(
+                String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
+        );
+        // 清除cookie
+        CookieUtil.set(response, CookieConstants.TOKEN, null, 0);
         return ResponseVo.success();
     }
 }

@@ -11,6 +11,7 @@ import com.jvxie.goshop.vo.ResponseVo;
 import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,12 +20,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.jvxie.goshop.constants.GoShopConstants.CUSTOMER;
+import java.util.concurrent.TimeUnit;
+
 
 @Slf4j
 public class UserLoginInterceptor implements HandlerInterceptor {
 
     @Autowired
+    @Qualifier("redisTemplateUser")
     private StringRedisTemplate redisTemplate;
 
     /**
@@ -36,14 +39,24 @@ public class UserLoginInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.debug("preHandle...{}", "");
         // 从Cookies中获取token
         Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
         if (cookie == null) throw new UserLoginException();
         // redis中获取token
-        String token = redisTemplate.opsForValue().get(String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue()));
+        String tokenFromRedis = redisTemplate.opsForValue().get(
+                String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
+        );
         // 对比token
-        if (StringUtils.isEmpty(token)) throw new UserLoginException();
+        if (StringUtils.isEmpty(tokenFromRedis)) throw new UserLoginException();
         // 对比成功刷新redis和cookie的时间
+        redisTemplate.opsForValue().set(
+                String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue()),
+                tokenFromRedis,
+                RedisConstants.TOKEN_EXPIRE,
+                TimeUnit.SECONDS
+        );
+        CookieUtil.set(response, "token", cookie.getValue(), RedisConstants.TOKEN_EXPIRE);
         return true;
     }
 }
