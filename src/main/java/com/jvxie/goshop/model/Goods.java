@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * goods
+ * @author 
+ */
 public class Goods implements Serializable {
     /**
      * 作主键用
@@ -23,7 +27,7 @@ public class Goods implements Serializable {
     /**
      * 商品类型ID，0：未分类
      */
-    private String goodsTypeId;
+    private Long goodsTypeId;
 
     /**
      * 商品原售价
@@ -36,6 +40,11 @@ public class Goods implements Serializable {
     private BigDecimal goodsPrice;
 
     /**
+     * 商品状态，0：已下架，1：上架，2：已删除
+     */
+    private Integer goodsStatus;
+
+    /**
      * 商品库存
      */
     private Integer goodsCount;
@@ -44,11 +53,6 @@ public class Goods implements Serializable {
      * 商品缩略图
      */
     private String goodsImg;
-
-    /**
-     * 商品状态，0：已下架，1：上架，3：已删除
-     */
-    private Integer goodsStatus;
 
     /**
      * 商品详情
@@ -96,11 +100,11 @@ public class Goods implements Serializable {
         this.goodsTitle = goodsTitle;
     }
 
-    public String getGoodsTypeId() {
+    public Long getGoodsTypeId() {
         return goodsTypeId;
     }
 
-    public void setGoodsTypeId(String goodsTypeId) {
+    public void setGoodsTypeId(Long goodsTypeId) {
         this.goodsTypeId = goodsTypeId;
     }
 
@@ -120,6 +124,14 @@ public class Goods implements Serializable {
         this.goodsPrice = goodsPrice;
     }
 
+    public Integer getGoodsStatus() {
+        return goodsStatus;
+    }
+
+    public void setGoodsStatus(Integer goodsStatus) {
+        this.goodsStatus = goodsStatus;
+    }
+
     public Integer getGoodsCount() {
         return goodsCount;
     }
@@ -134,14 +146,6 @@ public class Goods implements Serializable {
 
     public void setGoodsImg(String goodsImg) {
         this.goodsImg = goodsImg;
-    }
-
-    public Integer getGoodsStatus() {
-        return goodsStatus;
-    }
-
-    public void setGoodsStatus(Integer goodsStatus) {
-        this.goodsStatus = goodsStatus;
     }
 
     public String getGoodsDetail() {
@@ -194,9 +198,9 @@ public class Goods implements Serializable {
             && (this.getGoodsTypeId() == null ? other.getGoodsTypeId() == null : this.getGoodsTypeId().equals(other.getGoodsTypeId()))
             && (this.getGoodsOldPrice() == null ? other.getGoodsOldPrice() == null : this.getGoodsOldPrice().equals(other.getGoodsOldPrice()))
             && (this.getGoodsPrice() == null ? other.getGoodsPrice() == null : this.getGoodsPrice().equals(other.getGoodsPrice()))
+            && (this.getGoodsStatus() == null ? other.getGoodsStatus() == null : this.getGoodsStatus().equals(other.getGoodsStatus()))
             && (this.getGoodsCount() == null ? other.getGoodsCount() == null : this.getGoodsCount().equals(other.getGoodsCount()))
             && (this.getGoodsImg() == null ? other.getGoodsImg() == null : this.getGoodsImg().equals(other.getGoodsImg()))
-            && (this.getGoodsStatus() == null ? other.getGoodsStatus() == null : this.getGoodsStatus().equals(other.getGoodsStatus()))
             && (this.getGoodsDetail() == null ? other.getGoodsDetail() == null : this.getGoodsDetail().equals(other.getGoodsDetail()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
@@ -213,9 +217,9 @@ public class Goods implements Serializable {
         result = prime * result + ((getGoodsTypeId() == null) ? 0 : getGoodsTypeId().hashCode());
         result = prime * result + ((getGoodsOldPrice() == null) ? 0 : getGoodsOldPrice().hashCode());
         result = prime * result + ((getGoodsPrice() == null) ? 0 : getGoodsPrice().hashCode());
+        result = prime * result + ((getGoodsStatus() == null) ? 0 : getGoodsStatus().hashCode());
         result = prime * result + ((getGoodsCount() == null) ? 0 : getGoodsCount().hashCode());
         result = prime * result + ((getGoodsImg() == null) ? 0 : getGoodsImg().hashCode());
-        result = prime * result + ((getGoodsStatus() == null) ? 0 : getGoodsStatus().hashCode());
         result = prime * result + ((getGoodsDetail() == null) ? 0 : getGoodsDetail().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
@@ -235,9 +239,9 @@ public class Goods implements Serializable {
         sb.append(", goodsTypeId=").append(goodsTypeId);
         sb.append(", goodsOldPrice=").append(goodsOldPrice);
         sb.append(", goodsPrice=").append(goodsPrice);
+        sb.append(", goodsStatus=").append(goodsStatus);
         sb.append(", goodsCount=").append(goodsCount);
         sb.append(", goodsImg=").append(goodsImg);
-        sb.append(", goodsStatus=").append(goodsStatus);
         sb.append(", goodsDetail=").append(goodsDetail);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

@@ -5,20 +5,20 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
     <result column="goods_title" jdbcType="VARCHAR" property="goodsTitle" />
-    <result column="goods_type_id" jdbcType="VARCHAR" property="goodsTypeId" />
+    <result column="goods_type_id" jdbcType="BIGINT" property="goodsTypeId" />
     <result column="goods_old_price" jdbcType="DECIMAL" property="goodsOldPrice" />
     <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="goods_status" jdbcType="INTEGER" property="goodsStatus" />
     <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
     <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
-    <result column="goods_status" jdbcType="INTEGER" property="goodsStatus" />
     <result column="goods_detail" jdbcType="VARCHAR" property="goodsDetail" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_id, goods_title, goods_type_id, goods_old_price, goods_price, goods_count, 
-    goods_img, goods_status, goods_detail, create_time, update_time, delete_time
+    id, goods_id, goods_title, goods_type_id, goods_old_price, goods_price, goods_status, 
+    goods_count, goods_img, goods_detail, create_time, update_time, delete_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,19 +26,37 @@
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByGoodsTypeIdSet"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_status = 1
+    <if test="goodsTypeIdSet.size() > 0">
+      and goods_type_id in
+      <foreach collection="goodsTypeIdSet" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  <select id="selectByGoodsId" resultType="com.jvxie.goshop.model.Goods">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from goods
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.Goods" useGeneratedKeys="true">
     insert into goods (goods_id, goods_title, goods_type_id, 
-      goods_old_price, goods_price, goods_count, 
-      goods_img, goods_status, goods_detail, 
+      goods_old_price, goods_price, goods_status, 
+      goods_count, goods_img, goods_detail, 
       create_time, update_time, delete_time
       )
-    values (#{goodsId,jdbcType=BIGINT}, #{goodsTitle,jdbcType=VARCHAR}, #{goodsTypeId,jdbcType=VARCHAR}, 
-      #{goodsOldPrice,jdbcType=DECIMAL}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsCount,jdbcType=INTEGER}, 
-      #{goodsImg,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=INTEGER}, #{goodsDetail,jdbcType=VARCHAR}, 
+    values (#{goodsId,jdbcType=BIGINT}, #{goodsTitle,jdbcType=VARCHAR}, #{goodsTypeId,jdbcType=BIGINT}, 
+      #{goodsOldPrice,jdbcType=DECIMAL}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsStatus,jdbcType=INTEGER}, 
+      #{goodsCount,jdbcType=INTEGER}, #{goodsImg,jdbcType=VARCHAR}, #{goodsDetail,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -60,14 +78,14 @@
       <if test="goodsPrice != null">
         goods_price,
       </if>
+      <if test="goodsStatus != null">
+        goods_status,
+      </if>
       <if test="goodsCount != null">
         goods_count,
       </if>
       <if test="goodsImg != null">
         goods_img,
-      </if>
-      <if test="goodsStatus != null">
-        goods_status,
       </if>
       <if test="goodsDetail != null">
         goods_detail,
@@ -90,7 +108,7 @@
         #{goodsTitle,jdbcType=VARCHAR},
       </if>
       <if test="goodsTypeId != null">
-        #{goodsTypeId,jdbcType=VARCHAR},
+        #{goodsTypeId,jdbcType=BIGINT},
       </if>
       <if test="goodsOldPrice != null">
         #{goodsOldPrice,jdbcType=DECIMAL},
@@ -98,14 +116,14 @@
       <if test="goodsPrice != null">
         #{goodsPrice,jdbcType=DECIMAL},
       </if>
+      <if test="goodsStatus != null">
+        #{goodsStatus,jdbcType=INTEGER},
+      </if>
       <if test="goodsCount != null">
         #{goodsCount,jdbcType=INTEGER},
       </if>
       <if test="goodsImg != null">
         #{goodsImg,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsStatus != null">
-        #{goodsStatus,jdbcType=INTEGER},
       </if>
       <if test="goodsDetail != null">
         #{goodsDetail,jdbcType=VARCHAR},
@@ -131,7 +149,7 @@
         goods_title = #{goodsTitle,jdbcType=VARCHAR},
       </if>
       <if test="goodsTypeId != null">
-        goods_type_id = #{goodsTypeId,jdbcType=VARCHAR},
+        goods_type_id = #{goodsTypeId,jdbcType=BIGINT},
       </if>
       <if test="goodsOldPrice != null">
         goods_old_price = #{goodsOldPrice,jdbcType=DECIMAL},
@@ -139,14 +157,14 @@
       <if test="goodsPrice != null">
         goods_price = #{goodsPrice,jdbcType=DECIMAL},
       </if>
+      <if test="goodsStatus != null">
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
       <if test="goodsCount != null">
         goods_count = #{goodsCount,jdbcType=INTEGER},
       </if>
       <if test="goodsImg != null">
         goods_img = #{goodsImg,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsStatus != null">
-        goods_status = #{goodsStatus,jdbcType=INTEGER},
       </if>
       <if test="goodsDetail != null">
         goods_detail = #{goodsDetail,jdbcType=VARCHAR},
@@ -167,12 +185,12 @@
     update goods
     set goods_id = #{goodsId,jdbcType=BIGINT},
       goods_title = #{goodsTitle,jdbcType=VARCHAR},
-      goods_type_id = #{goodsTypeId,jdbcType=VARCHAR},
+      goods_type_id = #{goodsTypeId,jdbcType=BIGINT},
       goods_old_price = #{goodsOldPrice,jdbcType=DECIMAL},
       goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_status = #{goodsStatus,jdbcType=INTEGER},
       goods_count = #{goodsCount,jdbcType=INTEGER},
       goods_img = #{goodsImg,jdbcType=VARCHAR},
-      goods_status = #{goodsStatus,jdbcType=INTEGER},
       goods_detail = #{goodsDetail,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
