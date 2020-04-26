@@ -55,7 +55,7 @@ public class GoodsServiceImpl implements IGoodsService {
     public ResponseVo<GoodsDetailVo> detail(Long goodsId) {
         Goods goods = goodsMapper.selectByGoodsId(goodsId);
         if (goods == null) {
-            return ResponseVo.error(ResponseEnum.GOODS_NOTFOUND);
+            return ResponseVo.error(ResponseEnum.GOODS_NOT_FOUND);
         }
         if (goods.getGoodsStatus().equals(OFF_SALE.getCode()) ||
                 goods.getGoodsStatus().equals(DELETE.getCode())) {

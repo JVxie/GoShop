@@ -4,22 +4,14 @@ import com.jvxie.goshop.enums.IdGeneratorEnum;
 
 /**
  * SnowFlake源码，用于生成随机ID。
- * workerID（0-31）、datacenterId（0-31）分别对应：
- * 0，0：goods表
- * 0，1：goods_type表
- * 0，2：shipping表
- * 0，3：shop_car表
- * 0，4：user表
- * 0，5：user_group表
- * 0，6：user_order表
- * 0，7：user_order_info表
- * 0，8：user_order_pay表
+ * workerID（0-31）、datacenterId（0-31）：
+ * 具体可在IdGeneratorEnum里查看对应关系
  */
 
 public class IdGeneratorUtil {
 
     // ==============================Fields===========================================
-    /** 开始时间截 (2015-01-01) */
+    /** 开始时间截 */
     private final long twepoch = 1420041600000L;
 
     /** 机器id所占的位数 */

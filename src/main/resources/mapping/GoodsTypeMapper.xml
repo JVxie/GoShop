@@ -28,6 +28,7 @@
     <include refid="Base_Column_List" />
     from goods_type
     where goods_type_status = 1
+    and delete_time is null
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from goods_type

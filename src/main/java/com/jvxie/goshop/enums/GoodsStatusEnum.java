@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum GoodsStatusEnum {
     OFF_SALE(0),
+    ON_SALE(1),
     DELETE(2),
     ;
 

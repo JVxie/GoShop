@@ -1,6 +1,5 @@
 package com.jvxie.goshop.vo;
 
-import com.jvxie.goshop.model.GoodsType;
 import lombok.Data;
 
 import java.util.List;

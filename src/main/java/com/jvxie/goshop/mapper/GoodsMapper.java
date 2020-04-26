@@ -25,4 +25,6 @@ public interface GoodsMapper {
     List<Goods> selectByGoodsTypeIdSet(@Param("goodsTypeIdSet") Set<Long> goodsTypeIdSet);
 
     Goods selectByGoodsId(Long goodsId);
+
+    List<Goods> selectByGoodsIdSet(@Param("goodsIdSet") Set<Long> goodsIdSet);
 }

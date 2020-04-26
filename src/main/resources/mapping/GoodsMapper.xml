@@ -37,12 +37,26 @@
         #{item}
       </foreach>
     </if>
+    and delete_time is null
   </select>
   <select id="selectByGoodsId" resultType="com.jvxie.goshop.model.Goods">
     select
     <include refid="Base_Column_List" />
     from goods
     where goods_id = #{goodsId,jdbcType=BIGINT}
+    and delete_time is null
+  </select>
+  <select id="selectByGoodsIdSet" resultType="com.jvxie.goshop.model.Goods">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where delete_time is null
+    <if test="goodsIdSet.size() > 0">
+      and goods_id in
+      <foreach collection="goodsIdSet" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from goods

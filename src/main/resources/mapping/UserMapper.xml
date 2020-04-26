@@ -35,30 +35,35 @@
     count(1)
     from user
     where user_email = #{userEmail,jdbcType=VARCHAR}
+    and delete_time is null
   </select>
   <select id="countByUserPhone" parameterType="java.lang.String" resultType="java.lang.Integer">
     select
     count(1)
     from user
     where user_phone = #{userPhone,jdbcType=VARCHAR}
+    and delete_time is null
   </select>
   <select id="selectByUserEmail" resultType="com.jvxie.goshop.model.User">
     select
     <include refid="Base_Column_List" />
     from user
     where user_email = #{userEmail,jdbcType=VARCHAR}
+    and delete_time is null
   </select>
   <select id="selectByUserPhone" resultType="com.jvxie.goshop.model.User">
     select
     <include refid="Base_Column_List" />
     from user
     where user_phone = #{userPhone,jdbcType=VARCHAR}
+    and delete_time is null
   </select>
   <select id="selectByUserId" resultType="com.jvxie.goshop.model.User">
     select
     <include refid="Base_Column_List" />
     from user
     where user_id = #{userId,jdbcType=BIGINT}
+    and delete_time is null
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
