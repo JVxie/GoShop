@@ -35,47 +35,6 @@ public class ShopCarServiceImpl implements IShopCarService {
     private Gson gson = new Gson();
 
     @Override
-    public ResponseVo add(Long uid, ShopCarAddForm form) {
-        // 此方法在默认只新增一件
-        // 判断商品是否存在
-        Goods goods = goodsMapper.selectByGoodsId(form.getGoodsId());
-        Integer quantity = form.getQuantity() == null ? RedisConstants.SHOP_CAR_QUANTITY : form.getQuantity();
-        if (goods == null) {
-            return ResponseVo.error(ResponseEnum.GOODS_NOT_FOUND);
-        }
-        // 判断商品是否在售
-        if (!goods.getGoodsStatus().equals(GoodsStatusEnum.ON_SALE.getCode())) {
-            return ResponseVo.error(ResponseEnum.GOODS_OFF_SALE_OR_DELETE);
-        }
-        // 判断库存是否充足
-        if (goods.getGoodsCount() < quantity) {
-            return ResponseVo.error(ResponseEnum.GOODS_COUNT_ERROR);
-        }
-        // 从redis读取数据
-        HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
-        String redisValue = opsForHash.get(redisKey, String.valueOf(goods.getGoodsId()));
-        ShopCar shopCar;
-        if (StringUtils.isEmpty(redisValue)) {
-            // redis（或者说购物车）里没有该商品
-            if (opsForHash.size(redisKey) >= 120) {
-                // 如果购物车总数量超过120件
-                return ResponseVo.error(ResponseEnum.SHOP_CAR_EXCEEDED);
-            }
-            shopCar = new ShopCar(goods.getGoodsId(), quantity, form.getSelected());
-        } else {
-            shopCar = gson.fromJson(redisValue, ShopCar.class);
-            shopCar.setQuantity(shopCar.getQuantity() + quantity);
-        }
-        opsForHash.put(
-                redisKey,
-                String.valueOf(goods.getGoodsId()),
-                gson.toJson(shopCar)
-        );
-        return list(uid);
-    }
-
-    @Override
     public ResponseVo list(Long uid) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
         String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
@@ -124,6 +83,47 @@ public class ShopCarServiceImpl implements IShopCarService {
         shopCarVo.setShopCarTotalQuantity(totalQuantity);
         shopCarVo.setShopCarTotalPrice(totalPrice);
         return ResponseVo.success(shopCarVo);
+    }
+
+    @Override
+    public ResponseVo add(Long uid, ShopCarAddForm form) {
+        // 此方法在默认只新增一件
+        // 判断商品是否存在
+        Goods goods = goodsMapper.selectByGoodsId(form.getGoodsId());
+        Integer quantity = form.getQuantity() == null ? RedisConstants.SHOP_CAR_QUANTITY : form.getQuantity();
+        if (goods == null) {
+            return ResponseVo.error(ResponseEnum.GOODS_NOT_FOUND);
+        }
+        // 判断商品是否在售
+        if (!goods.getGoodsStatus().equals(GoodsStatusEnum.ON_SALE.getCode())) {
+            return ResponseVo.error(ResponseEnum.GOODS_OFF_SALE_OR_DELETE);
+        }
+        // 判断库存是否充足
+        if (goods.getGoodsCount() < quantity) {
+            return ResponseVo.error(ResponseEnum.GOODS_COUNT_ERROR);
+        }
+        // 从redis读取数据
+        HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisValue = opsForHash.get(redisKey, String.valueOf(goods.getGoodsId()));
+        ShopCar shopCar;
+        if (StringUtils.isEmpty(redisValue)) {
+            // redis（或者说购物车）里没有该商品
+            if (opsForHash.size(redisKey) >= 120) {
+                // 如果购物车总数量超过120件
+                return ResponseVo.error(ResponseEnum.SHOP_CAR_EXCEEDED);
+            }
+            shopCar = new ShopCar(goods.getGoodsId(), quantity, form.getSelected());
+        } else {
+            shopCar = gson.fromJson(redisValue, ShopCar.class);
+            shopCar.setQuantity(shopCar.getQuantity() + quantity);
+        }
+        opsForHash.put(
+                redisKey,
+                String.valueOf(goods.getGoodsId()),
+                gson.toJson(shopCar)
+        );
+        return list(uid);
     }
 
     @Override

@@ -32,7 +32,6 @@ import static com.jvxie.goshop.constants.GoShopConstants.*;
 @RestController
 @Slf4j
 public class UserController {
-
     @Autowired
     UserServiceImpl userService;
 
@@ -46,14 +45,38 @@ public class UserController {
     }
 
     @PostMapping("/user/register/registerByPhone")
-    private ResponseVo registerByPhone(@Valid @RequestBody UserByPhoneForm userByPhoneForm) {
+    private ResponseVo registerByPhone(@Valid @RequestBody UserByPhoneForm userByPhoneForm,
+                                       HttpServletRequest request) {
+        Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
+        if (cookie != null) {
+            // Redis中对比token
+            String tokenFromRedis = redisTemplateUser.opsForValue().get(
+                    String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
+            );
+            // 对比token
+            if (!StringUtils.isEmpty(tokenFromRedis)) {
+                return ResponseVo.error(ResponseEnum.USER_LOGIN_EXIST);
+            }
+        }
         User user = new User();
         BeanUtils.copyProperties(userByPhoneForm, user);
         return userService.registerByPhone(user);
     }
 
     @PostMapping("/user/register/registerByEmail")
-    private ResponseVo registerByEmail(@Valid @RequestBody UserByEmailForm userByEmailForm) {
+    private ResponseVo registerByEmail(@Valid @RequestBody UserByEmailForm userByEmailForm,
+                                       HttpServletRequest request) {
+        Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
+        if (cookie != null) {
+            // Redis中对比token
+            String tokenFromRedis = redisTemplateUser.opsForValue().get(
+                    String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
+            );
+            // 对比token
+            if (!StringUtils.isEmpty(tokenFromRedis)) {
+                return ResponseVo.error(ResponseEnum.USER_LOGIN_EXIST);
+            }
+        }
         User user = new User();
         BeanUtils.copyProperties(userByEmailForm, user);
         return userService.registerByEmail(user);

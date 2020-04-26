@@ -16,9 +16,9 @@ public class GoodsController {
     GoodsServiceImpl goodsService;
 
     @GetMapping("/goods")
-    public ResponseVo goodsList(@RequestParam(value = "goods_type_id", required = false) Long goodsTypeId,
-                                @RequestParam(value = "page_num", defaultValue = "1") Integer pageNum,
-                                @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
+    public ResponseVo goodsList(@RequestParam(value = "goodsTypeId", required = false) Long goodsTypeId,
+                                @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         return goodsService.list(goodsTypeId, pageNum, pageSize);
     }
 

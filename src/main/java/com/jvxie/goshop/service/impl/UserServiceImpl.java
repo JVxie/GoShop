@@ -97,7 +97,7 @@ public class UserServiceImpl implements IUserService {
     public ResponseVo loginByPhone(String userPhone, String userPsw) {
         User user = userMapper.selectByUserPhone(userPhone);
         if (user == null ||
-                user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
+                !user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
             // 用户不存在 或 密码错误 均返回（登录名或密码错误)
             return ResponseVo.error(LOGINNAME_OR_PASSWORD_ERROR);
         }
