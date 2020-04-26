@@ -48,22 +48,22 @@
     >
     >```json
     >{
-    >        "status": 2,
-    >        "msg": "手机号已注册"
+    >    "status": 2,
+    >    "msg": "手机号已注册"
     >}
     >```
     >
     >```json
     >{
-    >        "status": 11,
-    >        "msg": "手机号不能为空"
+    >    "status": 11,
+    >    "msg": "手机号不能为空"
     >}
     >```
     >
     >```json
     >{
-    >        "status": 14,
-    >        "msg": "用户已经登录"
+    >    "status": 14,
+    >    "msg": "用户已经登录"
     >}
     >```
 
@@ -78,9 +78,9 @@
     >```json
     >{
     >    "user_name": "test2",
-    >        "user_psw": "123456a",
-    >        "user_email": "test@test.test",
-    >        "user_sex": "3"
+    >    "user_psw": "123456a",
+    >    "user_email": "test@test.test",
+    >    "user_sex": "3"
     >}
     >```
     >
@@ -99,22 +99,22 @@
     >
     >```json
     >{
-    >        "status": 3,
-    >        "msg": "邮箱已注册"
+    >    "status": 3,
+    >    "msg": "邮箱已注册"
     >}
     >```
     >
     >```json
     >{
-    >        "status": 11,
-    >        "msg": "邮箱不能为空"
+    >    "status": 11,
+    >    "msg": "邮箱不能为空"
     >}
     >```
     >
     >```json
     >{
-    >        "status": 14,
-    >        "msg": "用户已经登录"
+    >    "status": 14,
+    >    "msg": "用户已经登录"
     >}
     >```
 
@@ -195,8 +195,8 @@
     >
     >```json
     >{
-    >        "status": 0,
-    >        "msg": "成功"
+    >    "status": 0,
+    >    "msg": "成功"
     >}
     >```
     >
@@ -204,8 +204,8 @@
     >
     >```json
     >{
-    >        "status": 10,
-    >        "msg": "用户未登录，请先登录"
+    >    "status": 10,
+    >    "msg": "用户未登录，请先登录"
     >}
     >```
 
@@ -227,25 +227,25 @@
     >
     >```json
     >{
-    >    	"status": 0,
-    >    	"data": {
-    >            "id": 11,
-    >            "user_id": 704003579786559488,
-    >            "user_name": "test1",
-    >            "user_psw": "",
-    >            "user_group_id": 1,
-    >            "user_sex": 3,
-    >            "real_name": null,
-    >            "user_phone": "18050861803",
-    >            "user_email": null,
-    >            "user_question": null,
-    >            "user_answer": null,
-    >            "last_login_time": null,
-    >            "last_login_ip": null,
-    >            "create_time": "2020-04-26T08:18:53.000+0000",
-    >            "update_time": "2020-04-26T08:18:53.000+0000",
-    >            "delete_time": null
-    >        }
+    >  	 "status": 0,
+    >    "data": {
+    >        "id": 11,
+    >        "user_id": 704003579786559488,
+    >        "user_name": "test1",
+    >        "user_psw": "",
+    >        "user_group_id": 1,
+    >        "user_sex": 3,
+    >        "real_name": null,
+    >        "user_phone": "18050861803",
+    >        "user_email": null,
+    >        "user_question": null,
+    >        "user_answer": null,
+    >        "last_login_time": null,
+    >        "last_login_ip": null,
+    >        "create_time": "2020-04-26T08:18:53.000+0000",
+    >        "update_time": "2020-04-26T08:18:53.000+0000",
+    >        "delete_time": null
+    >    }
     >}
     >```
     >
@@ -253,8 +253,8 @@
     >
     >```json
     >{
-    >    	"status": 10,
-    >    	"msg": "用户未登录，请先登录"
+    >    "status": 10,
+    >    "msg": "用户未登录，请先登录"
     >}
     >```
 
