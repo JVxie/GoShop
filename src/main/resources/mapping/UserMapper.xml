@@ -24,12 +24,6 @@
     user_email, user_question, user_answer, last_login_time, last_login_ip, create_time, 
     update_time, delete_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
   <select id="countByUserEmail" parameterType="java.lang.String" resultType="java.lang.Integer">
     select
     count(1)
@@ -65,10 +59,6 @@
     where user_id = #{userId,jdbcType=BIGINT}
     and delete_time is null
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.User" useGeneratedKeys="true">
     insert into user (user_id, user_name, user_psw, 
       user_group_id, user_sex, real_name, 
@@ -180,74 +170,4 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jvxie.goshop.model.User">
-    update user
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPsw != null">
-        user_psw = #{userPsw,jdbcType=VARCHAR},
-      </if>
-      <if test="userGroupId != null">
-        user_group_id = #{userGroupId,jdbcType=INTEGER},
-      </if>
-      <if test="userSex != null">
-        user_sex = #{userSex,jdbcType=INTEGER},
-      </if>
-      <if test="realName != null">
-        real_name = #{realName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPhone != null">
-        user_phone = #{userPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="userEmail != null">
-        user_email = #{userEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="userQuestion != null">
-        user_question = #{userQuestion,jdbcType=VARCHAR},
-      </if>
-      <if test="userAnswer != null">
-        user_answer = #{userAnswer,jdbcType=VARCHAR},
-      </if>
-      <if test="lastLoginTime != null">
-        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastLoginIp != null">
-        last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteTime != null">
-        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.User">
-    update user
-    set user_id = #{userId,jdbcType=BIGINT},
-      user_name = #{userName,jdbcType=VARCHAR},
-      user_psw = #{userPsw,jdbcType=VARCHAR},
-      user_group_id = #{userGroupId,jdbcType=INTEGER},
-      user_sex = #{userSex,jdbcType=INTEGER},
-      real_name = #{realName,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=VARCHAR},
-      user_email = #{userEmail,jdbcType=VARCHAR},
-      user_question = #{userQuestion,jdbcType=VARCHAR},
-      user_answer = #{userAnswer,jdbcType=VARCHAR},
-      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

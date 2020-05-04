@@ -64,8 +64,8 @@ public class GoodsTypeServiceImplTest extends GoshopApplicationTests {
         goodsTypes[3].setParentTypeId(699288459889737728L);
         goodsTypes[4].setGoodsTypeName("眼镜");
         goodsTypes[4].setParentTypeId(699288459889737728L);
-        for (int i= 0; i < MAX_N; ++i)
-            goodsTypeService.insertGoodsType(goodsTypes[i]);
+//        for (int i= 0; i < MAX_N; ++i)
+//            goodsTypeService.insertGoodsType(goodsTypes[i]);
     }
 
     @Test

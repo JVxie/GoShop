@@ -4,7 +4,7 @@ public enum IdGeneratorEnum {
     GOODS(0, 0),
     GOODS_TYPE(0, 1),
     SHIPPING(0, 2),
-    SHOP_CAR(0, 3),
+//    SHOP_CAR(0, 3), 废弃，已使用Redis方式储存，无需生成Id
     USER(0, 4),
     USER_GROUP(0, 5),
     USER_ORDER(0, 6),

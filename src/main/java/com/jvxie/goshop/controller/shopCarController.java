@@ -33,8 +33,8 @@ public class shopCarController {
         String tokenFromRedis = redisTemplateUser.opsForValue().get(
                 String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
         );
-        Long uid = Long.valueOf(tokenFromRedis);
-        return shopCarService.list(uid);
+        Long userId = Long.valueOf(tokenFromRedis);
+        return shopCarService.list(userId);
     }
 
     @PostMapping("/shopCar")
@@ -44,8 +44,8 @@ public class shopCarController {
         String tokenFromRedis = redisTemplateUser.opsForValue().get(
                 String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
         );
-        Long uid = Long.valueOf(tokenFromRedis);
-        return shopCarService.add(uid, shopCarAddForm);
+        Long userId = Long.valueOf(tokenFromRedis);
+        return shopCarService.add(userId, shopCarAddForm);
     }
 
     @PutMapping("/shopCar/{goodsId}")
@@ -56,8 +56,8 @@ public class shopCarController {
         String tokenFromRedis = redisTemplateUser.opsForValue().get(
                 String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
         );
-        Long uid = Long.valueOf(tokenFromRedis);
-        return shopCarService.update(uid, goodsId, shopCarUpdateForm);
+        Long userId = Long.valueOf(tokenFromRedis);
+        return shopCarService.update(userId, goodsId, shopCarUpdateForm);
     }
 
     @DeleteMapping("/shopCar/{goodsId}")
@@ -67,8 +67,8 @@ public class shopCarController {
         String tokenFromRedis = redisTemplateUser.opsForValue().get(
                 String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
         );
-        Long uid = Long.valueOf(tokenFromRedis);
-        return shopCarService.delete(uid, goodsId);
+        Long userId = Long.valueOf(tokenFromRedis);
+        return shopCarService.delete(userId, goodsId);
     }
 
     @PutMapping("/shopCar/selectAll")
@@ -77,8 +77,8 @@ public class shopCarController {
         String tokenFromRedis = redisTemplateUser.opsForValue().get(
                 String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
         );
-        Long uid = Long.valueOf(tokenFromRedis);
-        return shopCarService.selectAll(uid);
+        Long userId = Long.valueOf(tokenFromRedis);
+        return shopCarService.selectAll(userId);
     }
 
     @PutMapping("/shopCar/unSelectAll")
@@ -87,8 +87,8 @@ public class shopCarController {
         String tokenFromRedis = redisTemplateUser.opsForValue().get(
                 String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
         );
-        Long uid = Long.valueOf(tokenFromRedis);
-        return shopCarService.unSelectAll(uid);
+        Long userId = Long.valueOf(tokenFromRedis);
+        return shopCarService.unSelectAll(userId);
     }
 
     @GetMapping("/shopCar/goods/sum")
@@ -97,7 +97,7 @@ public class shopCarController {
         String tokenFromRedis = redisTemplateUser.opsForValue().get(
                 String.format(RedisConstants.TOKEN_PREFIX, cookie.getValue())
         );
-        Long uid = Long.valueOf(tokenFromRedis);
-        return shopCarService.sum(uid);
+        Long userId = Long.valueOf(tokenFromRedis);
+        return shopCarService.sum(userId);
     }
 }

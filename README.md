@@ -26,10 +26,10 @@
     >
     >```json
     >{
-    >	"user_name": "test1",
-    >	"user_psw": "123456a",
-    >	"user_phone": "18050861803",
-    >	"user_sex": "3"
+    >    "user_name": "test1",
+    >    "user_psw": "123456a",
+    >    "user_phone": "18050861803",
+    >    "user_sex": "3"
     >}
     >```
     >
@@ -39,8 +39,8 @@
     >
     >```json
     >{
-    >	"status": 0,
-    >	"msg": "成功"
+    >    "status": 0,
+    >    "msg": "成功"
     >}
     >```
     >
@@ -90,8 +90,8 @@
     >
     >```json
     >{
-    >	"status": 0,
-    >	"msg": "成功"
+    >    "status": 0,
+    >    "msg": "成功"
     >}
     >```
     >
@@ -227,7 +227,7 @@
     >
     >```json
     >{
-    >  	 "status": 0,
+    >    "status": 0,
     >    "data": {
     >        "id": 11,
     >        "user_id": 704003579786559488,
@@ -478,6 +478,8 @@
 
 ## 三、 购物车模块（ShopCar）
 
+*注：以下所有功能需要先登录。*
+
 ### 1. 购物车详情功能
 
 * **GET** /shopCar
@@ -487,7 +489,7 @@
     >*request*
     >
     >```json
-    >无参数，需要先登录
+    >无参数
     >```
     >
     >*response*
@@ -536,11 +538,10 @@
     >*request*
     >
     >```json
-    ># 需要先登录
     >{
-    >	"goods_id": 700017327869001728,
-    >	"selected": true,
-    >	"quantity": 1
+    >    "goods_id": 700017327869001728,
+    >    "selected": true,
+    >    "quantity": 1
     >}
     >```
     >
@@ -552,7 +553,7 @@
     >{
     >    "status": 0,
     >    "data": {
-    >        "shop_car_goods_vo_list": [
+    >       "shop_car_goods_vo_list": [
     >            {
     >                "goods_id": 700017327848030208,
     >                "quantity": 2,
@@ -620,7 +621,6 @@
     >*request*
     >
     >```json
-    ># 需要先登录
     >{
     >    "quantity": 1,
     >    "selected": false
@@ -635,7 +635,7 @@
     >{
     >    "status": 0,
     >    "data": {
-    >        "shop_car_goods_vo_list": [
+    >       "shop_car_goods_vo_list": [
     >            {
     >                "goods_id": 700017327848030208,
     >                "quantity": 1,
@@ -681,7 +681,7 @@
     >    "msg": "购物车内无此商品，不可修改"
     >}
     >```
-
+    
 - **DELETE** /shopCar/{goodsId}
 
     *删除购物车内某商品，`goodsId`不可为空*
@@ -734,7 +734,7 @@
     >*request*
     >
     >```json
-    >无参数，需要先登录
+    >无参数
     >```
     >
     >*response*
@@ -779,7 +779,7 @@
     >*request*
     >
     >```json
-    >无参数，需要先登录
+    >无参数
     >```
     >
     >*response*
@@ -826,7 +826,7 @@
     > *request*
     >
     > ```json
-    > 无参数，需要登录状态
+    > 无参数
     > ```
     >
     > *response*
@@ -838,3 +838,206 @@
     > }
     > ```
 
+## 四、 收货地址模块（shipping）
+
+*注：以下功能均需要登录状态*
+
+### 1. 收货地址增删改功能
+
+- **POST** /shippings
+
+    *增加收货地址，request所有字段均不能为空。*
+
+    >*request*
+    >
+    >```json
+    >{
+    >    "shipping_name": "JVxie",
+    >    "shipping_phone": "18058061873",
+    >    "shipping_province": "福建省",
+    >    "shipping_city": "漳州市",
+    >    "shipping_district": "芗城区",
+    >    "shipping_address": "某大学",
+    >    "shipping_zip": "363000"
+    >}
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >    "status": 0,
+    >    "data": {
+    >        "shippingId": 707031620267540480
+    >    }
+    >}
+    >```
+    >
+    >- failed
+    >
+    >```json
+    >{
+    >    "status": 9,
+    >    "msg": "失败"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 11,
+    >    "msg": "XXX不能为空"
+    >}
+    >```
+
+- **DELETE** /shippings/{shippingId}
+
+    *删除收货地址，shippingId不可为空*
+
+    >*request*
+    >
+    >```json
+    >shippingId = 707031620267540480
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >    "status": 0,
+    >    "msg": "成功"
+    >}
+    >```
+    >
+    >- failed
+    >
+    >```json
+    >{
+    >    "status": 9,
+    >    "msg": "失败"
+    >}
+    >```
+
+- **PUT** /shippings/{shippingId}
+
+    *更改收货地址详情，所有字段均不可为空。*
+
+    >*request*
+    >
+    >```json
+    >shippingId = 707031620267540480
+    >{
+    >    "shipping_name": "JVxie",
+    >    "shipping_phone": "18058061873",
+    >    "shipping_province": "北京市",
+    >    "shipping_city": "北京",
+    >    "shipping_district": "五环",
+    >    "shipping_address": "某大学",
+    >    "shipping_zip": "010000"
+    >}
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >    "status": 0,
+    >    "msg": "成功"
+    >}
+    >```
+    >
+    >- failed
+    >
+    >```json
+    >{
+    >    "status": 9,
+    >    "msg": "失败"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 11,
+    >    "msg": "XXX不能为空"
+    >}
+    >```
+
+### 2. 收货地址列表功能
+
+- **GET** /shippings
+
+    *获取所有收货地址*
+
+    >*request*
+    >
+    >```json
+    >无参数
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >    "status": 0,
+    >    "data": {
+    >        "total": 3,
+    >        "list": [
+    >            {
+    >                "shipping_id": 707031620267540480,
+    >                "shipping_name": "JVxie",
+    >                "shipping_phone": "18058061873",
+    >                "shipping_province": "北京市",
+    >                "shipping_city": "北京",
+    >                "shipping_district": "五环",
+    >                "shipping_address": "某大学",
+    >                "shipping_zip": "010000"
+    >            },
+    >            {
+    >                "shipping_id": 707035390032478208,
+    >                "shipping_name": "JVxie",
+    >                "shipping_phone": "18058061873",
+    >                "shipping_province": "福建省",
+    >                "shipping_city": "漳州市",
+    >                "shipping_district": "芗城区",
+    >                "shipping_address": "某大学",
+    >                "shipping_zip": "363000"
+    >            },
+    >            {
+    >                "shipping_id": 707035397452201984,
+    >                "shipping_name": "JVxie",
+    >                "shipping_phone": "18058061873",
+    >                "shipping_province": "福建省",
+    >                "shipping_city": "漳州市",
+    >                "shipping_district": "芗城区",
+    >                "shipping_address": "某大学",
+    >                "shipping_zip": "363000"
+    >            }
+    >        ],
+    >        "page_num": 1,
+    >        "page_size": 10,
+    >        "size": 3,
+    >        "start_row": 1,
+    >        "end_row": 3,
+    >        "pages": 1,
+    >        "pre_page": 0,
+    >        "next_page": 0,
+    >        "is_first_page": true,
+    >        "is_last_page": true,
+    >        "has_previous_page": false,
+    >        "has_next_page": false,
+    >        "navigate_pages": 8,
+    >        "navigatepage_nums": [
+    >            1
+    >        ],
+    >        "navigate_first_page": 1,
+    >        "navigate_last_page": 1
+    >    }
+    >}
+    >```

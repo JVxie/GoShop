@@ -1,17 +1,19 @@
 package com.jvxie.goshop.mapper;
 
 import com.jvxie.goshop.model.Shipping;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ShippingMapper {
-    int deleteByPrimaryKey(Integer id);
-
     int insert(Shipping record);
 
     int insertSelective(Shipping record);
 
-    Shipping selectByPrimaryKey(Integer id);
+    int deleteByShippingIdAndUserId(@Param("userId") Long userId,
+                                    @Param("shippingId") Long shippingId);
 
-    int updateByPrimaryKeySelective(Shipping record);
+    int updateByShippingId(Shipping record);
 
-    int updateByPrimaryKey(Shipping record);
+    List<Shipping> selectByUserId(Long userId);
 }

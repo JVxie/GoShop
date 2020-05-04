@@ -56,13 +56,6 @@ public class GoodsTypeServiceImpl implements IGoodsTypeService {
     }
 
     @Override
-    public void insertGoodsType(GoodsType goodsType) {
-        IdGeneratorUtil idGeneratorUtil = new IdGeneratorUtil(IdGeneratorEnum.GOODS_TYPE);
-        goodsType.setGoodsTypeId(idGeneratorUtil.nextId());
-        goodsTypeMapper.insertSelective(goodsType);
-    }
-
-    @Override
     public void findSubGoodsTypeId(Long goodsTypeId, Set<Long> goodsTypeIdSet) {
         List<GoodsType> goodsTypes = goodsTypeMapper.selectAll();
         findSubGoodsTypeId(goodsTypeId, goodsTypeIdSet, goodsTypes);

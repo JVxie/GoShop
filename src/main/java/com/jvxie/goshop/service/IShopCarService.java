@@ -5,17 +5,17 @@ import com.jvxie.goshop.form.ShopCarUpdateForm;
 import com.jvxie.goshop.vo.ResponseVo;
 
 public interface IShopCarService {
-    ResponseVo add(Long uid, ShopCarAddForm form);
+    ResponseVo add(Long userId, ShopCarAddForm form);
 
-    ResponseVo list(Long uid);
+    ResponseVo list(Long userId);
 
-    ResponseVo update(Long uid, Long goodsId, ShopCarUpdateForm shopCarUpdateForm);
+    ResponseVo update(Long userId, Long goodsId, ShopCarUpdateForm shopCarUpdateForm);
 
-    ResponseVo delete(Long uid, Long goodsId);
+    ResponseVo delete(Long userId, Long goodsId);
 
-    ResponseVo selectAll(Long uid);
+    ResponseVo selectAll(Long userId);
 
-    ResponseVo unSelectAll(Long uid);
+    ResponseVo unSelectAll(Long userId);
 
-    ResponseVo sum(Long uid);
+    ResponseVo sum(Long userId);
 }

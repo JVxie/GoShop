@@ -15,7 +15,7 @@ public class GoodsMapperTest extends GoshopApplicationTests {
 
     @Test
     public void selectByPrimaryKey() {
-        Goods goods = goodsMapper.selectByPrimaryKey(1);
-        System.out.println(goods);
+//        Goods goods = goodsMapper.selectByPrimaryKey(1);
+//        System.out.println(goods);
     }
 }

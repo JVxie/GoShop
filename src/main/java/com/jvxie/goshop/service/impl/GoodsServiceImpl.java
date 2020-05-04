@@ -65,11 +65,4 @@ public class GoodsServiceImpl implements IGoodsService {
         BeanUtils.copyProperties(goods, goodsDetailVo);
         return ResponseVo.success(goodsDetailVo);
     }
-
-    @Override
-    public void insertGoods(Goods goods) {
-        IdGeneratorUtil idGenerator = new IdGeneratorUtil(IdGeneratorEnum.GOODS);
-        goods.setGoodsId(idGenerator.nextId());
-        goodsMapper.insertSelective(goods);
-    }
 }

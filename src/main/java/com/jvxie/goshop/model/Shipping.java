@@ -19,6 +19,11 @@ public class Shipping implements Serializable {
     private Long shippingId;
 
     /**
+     * 收货地址所属user_id
+     */
+    private Long userId;
+
+    /**
      * 收货人姓名
      */
     private String shippingName;
@@ -26,7 +31,7 @@ public class Shipping implements Serializable {
     /**
      * 收货人电话
      */
-    private Integer shippingPhone;
+    private String shippingPhone;
 
     /**
      * 收获地址省份
@@ -41,7 +46,7 @@ public class Shipping implements Serializable {
     /**
      * 收获地址区/县/街道
      */
-    private String shippingDistrct;
+    private String shippingDistrict;
 
     /**
      * 收货地址详细
@@ -51,7 +56,7 @@ public class Shipping implements Serializable {
     /**
      * 收货地址邮编
      */
-    private Integer shippingZip;
+    private String shippingZip;
 
     /**
      * 创建时间
@@ -86,6 +91,14 @@ public class Shipping implements Serializable {
         this.shippingId = shippingId;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public String getShippingName() {
         return shippingName;
     }
@@ -94,11 +107,11 @@ public class Shipping implements Serializable {
         this.shippingName = shippingName;
     }
 
-    public Integer getShippingPhone() {
+    public String getShippingPhone() {
         return shippingPhone;
     }
 
-    public void setShippingPhone(Integer shippingPhone) {
+    public void setShippingPhone(String shippingPhone) {
         this.shippingPhone = shippingPhone;
     }
 
@@ -118,12 +131,12 @@ public class Shipping implements Serializable {
         this.shippingCity = shippingCity;
     }
 
-    public String getShippingDistrct() {
-        return shippingDistrct;
+    public String getShippingDistrict() {
+        return shippingDistrict;
     }
 
-    public void setShippingDistrct(String shippingDistrct) {
-        this.shippingDistrct = shippingDistrct;
+    public void setShippingDistrict(String shippingDistrict) {
+        this.shippingDistrict = shippingDistrict;
     }
 
     public String getShippingAddress() {
@@ -134,11 +147,11 @@ public class Shipping implements Serializable {
         this.shippingAddress = shippingAddress;
     }
 
-    public Integer getShippingZip() {
+    public String getShippingZip() {
         return shippingZip;
     }
 
-    public void setShippingZip(Integer shippingZip) {
+    public void setShippingZip(String shippingZip) {
         this.shippingZip = shippingZip;
     }
 
@@ -180,11 +193,12 @@ public class Shipping implements Serializable {
         Shipping other = (Shipping) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getShippingId() == null ? other.getShippingId() == null : this.getShippingId().equals(other.getShippingId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getShippingName() == null ? other.getShippingName() == null : this.getShippingName().equals(other.getShippingName()))
             && (this.getShippingPhone() == null ? other.getShippingPhone() == null : this.getShippingPhone().equals(other.getShippingPhone()))
             && (this.getShippingProvince() == null ? other.getShippingProvince() == null : this.getShippingProvince().equals(other.getShippingProvince()))
             && (this.getShippingCity() == null ? other.getShippingCity() == null : this.getShippingCity().equals(other.getShippingCity()))
-            && (this.getShippingDistrct() == null ? other.getShippingDistrct() == null : this.getShippingDistrct().equals(other.getShippingDistrct()))
+            && (this.getShippingDistrict() == null ? other.getShippingDistrict() == null : this.getShippingDistrict().equals(other.getShippingDistrict()))
             && (this.getShippingAddress() == null ? other.getShippingAddress() == null : this.getShippingAddress().equals(other.getShippingAddress()))
             && (this.getShippingZip() == null ? other.getShippingZip() == null : this.getShippingZip().equals(other.getShippingZip()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -198,11 +212,12 @@ public class Shipping implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getShippingId() == null) ? 0 : getShippingId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getShippingName() == null) ? 0 : getShippingName().hashCode());
         result = prime * result + ((getShippingPhone() == null) ? 0 : getShippingPhone().hashCode());
         result = prime * result + ((getShippingProvince() == null) ? 0 : getShippingProvince().hashCode());
         result = prime * result + ((getShippingCity() == null) ? 0 : getShippingCity().hashCode());
-        result = prime * result + ((getShippingDistrct() == null) ? 0 : getShippingDistrct().hashCode());
+        result = prime * result + ((getShippingDistrict() == null) ? 0 : getShippingDistrict().hashCode());
         result = prime * result + ((getShippingAddress() == null) ? 0 : getShippingAddress().hashCode());
         result = prime * result + ((getShippingZip() == null) ? 0 : getShippingZip().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -219,11 +234,12 @@ public class Shipping implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", shippingId=").append(shippingId);
+        sb.append(", userId=").append(userId);
         sb.append(", shippingName=").append(shippingName);
         sb.append(", shippingPhone=").append(shippingPhone);
         sb.append(", shippingProvince=").append(shippingProvince);
         sb.append(", shippingCity=").append(shippingCity);
-        sb.append(", shippingDistrct=").append(shippingDistrct);
+        sb.append(", shippingDistrict=").append(shippingDistrict);
         sb.append(", shippingAddress=").append(shippingAddress);
         sb.append(", shippingZip=").append(shippingZip);
         sb.append(", createTime=").append(createTime);

@@ -11,7 +11,5 @@ public interface IGoodsTypeService {
 
     ResponseVo<List<GoodsTypeVo>> selectAll();
 
-    void insertGoodsType(GoodsType goodsType);
-
     void findSubGoodsTypeId(Long goodsTypeId, Set<Long> goodsTypeIdSet);
 }

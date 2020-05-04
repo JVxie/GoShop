@@ -54,8 +54,8 @@ public class GoodsServiceImplTest extends GoshopApplicationTests {
         goods[3].setGoodsCount(1);
         goods[3].setGoodsOldPrice(BigDecimal.TEN);
         goods[3].setGoodsPrice(BigDecimal.TEN);
-        for (int i = 0; i < MAX_N; ++i)
-            goodsService.insertGoods(goods[i]);
+//        for (int i = 0; i < MAX_N; ++i)
+//            goodsService.insertGoods(goods[i]);
     }
 
     @Test

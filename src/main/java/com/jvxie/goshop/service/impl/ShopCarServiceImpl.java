@@ -35,9 +35,9 @@ public class ShopCarServiceImpl implements IShopCarService {
     private Gson gson = new Gson();
 
     @Override
-    public ResponseVo list(Long uid) {
+    public ResponseVo list(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         Map<String, String> entries = opsForHash.entries(redisKey);
         Set<Long> goodsIdSet = new HashSet<>();
         List<ShopCar> shopCarList = new ArrayList<>();
@@ -86,7 +86,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     }
 
     @Override
-    public ResponseVo add(Long uid, ShopCarAddForm form) {
+    public ResponseVo add(Long userId, ShopCarAddForm form) {
         // 此方法在默认只新增一件
         // 判断商品是否存在
         Goods goods = goodsMapper.selectByGoodsId(form.getGoodsId());
@@ -104,7 +104,7 @@ public class ShopCarServiceImpl implements IShopCarService {
         }
         // 从redis读取数据
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         String redisValue = opsForHash.get(redisKey, String.valueOf(goods.getGoodsId()));
         ShopCar shopCar;
         if (StringUtils.isEmpty(redisValue)) {
@@ -123,13 +123,13 @@ public class ShopCarServiceImpl implements IShopCarService {
                 String.valueOf(goods.getGoodsId()),
                 gson.toJson(shopCar)
         );
-        return list(uid);
+        return list(userId);
     }
 
     @Override
-    public ResponseVo update(Long uid, Long goodsId, ShopCarUpdateForm shopCarUpdateForm) {
+    public ResponseVo update(Long userId, Long goodsId, ShopCarUpdateForm shopCarUpdateForm) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         String redisValue = opsForHash.get(redisKey, String.valueOf(goodsId));
         if (StringUtils.isEmpty(redisValue)) {
             // redis（或者说购物车）里没有该商品
@@ -150,13 +150,13 @@ public class ShopCarServiceImpl implements IShopCarService {
                 String.valueOf(goodsId),
                 gson.toJson(shopCar)
         );
-        return list(uid);
+        return list(userId);
     }
 
     @Override
-    public ResponseVo delete(Long uid, Long goodsId) {
+    public ResponseVo delete(Long userId, Long goodsId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         String redisValue = opsForHash.get(redisKey, String.valueOf(goodsId));
         if (StringUtils.isEmpty(redisValue)) {
             // redis（或者说购物车）里没有该商品
@@ -167,15 +167,15 @@ public class ShopCarServiceImpl implements IShopCarService {
                 redisKey,
                 String.valueOf(goodsId)
         );
-        return list(uid);
+        return list(userId);
     }
 
     @Override
-    public ResponseVo selectAll(Long uid) {
+    public ResponseVo selectAll(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
 
-        for (ShopCar shopCar : listForShopCar(uid)) {
+        for (ShopCar shopCar : listForShopCar(userId)) {
             shopCar.setSelected(true);
             opsForHash.put(
                     redisKey,
@@ -183,15 +183,15 @@ public class ShopCarServiceImpl implements IShopCarService {
                     gson.toJson(shopCar)
             );
         }
-        return list(uid);
+        return list(userId);
     }
 
     @Override
-    public ResponseVo unSelectAll(Long uid) {
+    public ResponseVo unSelectAll(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
 
-        for (ShopCar shopCar : listForShopCar(uid)) {
+        for (ShopCar shopCar : listForShopCar(userId)) {
             shopCar.setSelected(false);
             opsForHash.put(
                     redisKey,
@@ -199,21 +199,21 @@ public class ShopCarServiceImpl implements IShopCarService {
                     gson.toJson(shopCar)
             );
         }
-        return list(uid);
+        return list(userId);
     }
 
     @Override
-    public ResponseVo sum(Long uid) {
-        Integer sum = listForShopCar(uid)
+    public ResponseVo sum(Long userId) {
+        Integer sum = listForShopCar(userId)
                 .stream()
                 .map(ShopCar::getQuantity)
                 .reduce(0, Integer::sum);
         return ResponseVo.success(sum);
     }
 
-    private List<ShopCar> listForShopCar(Long uid) {
+    private List<ShopCar> listForShopCar(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
-        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, uid);
+        String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         Map<String, String> entries = opsForHash.entries(redisKey);
         List<ShopCar> shopCarList = new ArrayList<>();
         for (Map.Entry<String, String> entry : entries.entrySet()) {

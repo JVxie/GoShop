@@ -17,12 +17,6 @@
     id, goods_type_id, parent_type_id, goods_type_name, goods_type_status, goods_type_sort, 
     type_icon_class, create_time, update_time, delete_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from goods_type
-    where id = #{id,jdbcType=INTEGER}
-  </select>
   <select id="selectAll" resultType="com.jvxie.goshop.model.GoodsType">
     select
     <include refid="Base_Column_List" />
@@ -30,10 +24,6 @@
     where goods_type_status = 1
     and delete_time is null
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from goods_type
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.GoodsType" useGeneratedKeys="true">
     insert into goods_type (goods_type_id, parent_type_id, goods_type_name, 
       goods_type_status, goods_type_sort, type_icon_class, 
@@ -105,50 +95,4 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jvxie.goshop.model.GoodsType">
-    update goods_type
-    <set>
-      <if test="goodsTypeId != null">
-        goods_type_id = #{goodsTypeId,jdbcType=BIGINT},
-      </if>
-      <if test="parentTypeId != null">
-        parent_type_id = #{parentTypeId,jdbcType=BIGINT},
-      </if>
-      <if test="goodsTypeName != null">
-        goods_type_name = #{goodsTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsTypeStatus != null">
-        goods_type_status = #{goodsTypeStatus,jdbcType=INTEGER},
-      </if>
-      <if test="goodsTypeSort != null">
-        goods_type_sort = #{goodsTypeSort,jdbcType=INTEGER},
-      </if>
-      <if test="typeIconClass != null">
-        type_icon_class = #{typeIconClass,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteTime != null">
-        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.GoodsType">
-    update goods_type
-    set goods_type_id = #{goodsTypeId,jdbcType=BIGINT},
-      parent_type_id = #{parentTypeId,jdbcType=BIGINT},
-      goods_type_name = #{goodsTypeName,jdbcType=VARCHAR},
-      goods_type_status = #{goodsTypeStatus,jdbcType=INTEGER},
-      goods_type_sort = #{goodsTypeSort,jdbcType=INTEGER},
-      type_icon_class = #{typeIconClass,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>
