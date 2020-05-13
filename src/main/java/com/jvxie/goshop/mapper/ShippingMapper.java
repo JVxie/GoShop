@@ -16,4 +16,6 @@ public interface ShippingMapper {
     int updateByShippingId(Shipping record);
 
     List<Shipping> selectByUserId(Long userId);
+
+    Shipping selectByUserIdAndShippingId(Long userId, Long shippingId);
 }

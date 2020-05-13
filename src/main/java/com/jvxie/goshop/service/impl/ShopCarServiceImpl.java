@@ -35,7 +35,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     private Gson gson = new Gson();
 
     @Override
-    public ResponseVo list(Long userId) {
+    public ResponseVo<ShopCarVo> list(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
         String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         Map<String, String> entries = opsForHash.entries(redisKey);
@@ -86,7 +86,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     }
 
     @Override
-    public ResponseVo add(Long userId, ShopCarAddForm form) {
+    public ResponseVo<ShopCarVo> add(Long userId, ShopCarAddForm form) {
         // 此方法在默认只新增一件
         // 判断商品是否存在
         Goods goods = goodsMapper.selectByGoodsId(form.getGoodsId());
@@ -127,7 +127,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     }
 
     @Override
-    public ResponseVo update(Long userId, Long goodsId, ShopCarUpdateForm shopCarUpdateForm) {
+    public ResponseVo<ShopCarVo> update(Long userId, Long goodsId, ShopCarUpdateForm shopCarUpdateForm) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
         String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         String redisValue = opsForHash.get(redisKey, String.valueOf(goodsId));
@@ -140,8 +140,9 @@ public class ShopCarServiceImpl implements IShopCarService {
         if (shopCarUpdateForm.getQuantity() != null && goods.getGoodsCount() < shopCarUpdateForm.getQuantity()) {
             return ResponseVo.error(ResponseEnum.GOODS_COUNT_ERROR);
         }
-        if (shopCarUpdateForm.getQuantity() != null && shopCarUpdateForm.getQuantity() >= 0)
+        if (shopCarUpdateForm.getQuantity() != null && shopCarUpdateForm.getQuantity() >= 0) {
             shopCar.setQuantity(shopCarUpdateForm.getQuantity());
+        }
         if (shopCarUpdateForm.getSelected() != null) {
             shopCar.setSelected(shopCarUpdateForm.getSelected());
         }
@@ -154,7 +155,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     }
 
     @Override
-    public ResponseVo delete(Long userId, Long goodsId) {
+    public ResponseVo<ShopCarVo> delete(Long userId, Long goodsId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
         String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         String redisValue = opsForHash.get(redisKey, String.valueOf(goodsId));
@@ -171,7 +172,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     }
 
     @Override
-    public ResponseVo selectAll(Long userId) {
+    public ResponseVo<ShopCarVo> selectAll(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
         String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
 
@@ -187,7 +188,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     }
 
     @Override
-    public ResponseVo unSelectAll(Long userId) {
+    public ResponseVo<ShopCarVo> unSelectAll(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
         String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
 
@@ -203,7 +204,7 @@ public class ShopCarServiceImpl implements IShopCarService {
     }
 
     @Override
-    public ResponseVo sum(Long userId) {
+    public ResponseVo<Integer> sum(Long userId) {
         Integer sum = listForShopCar(userId)
                 .stream()
                 .map(ShopCar::getQuantity)
@@ -211,7 +212,8 @@ public class ShopCarServiceImpl implements IShopCarService {
         return ResponseVo.success(sum);
     }
 
-    private List<ShopCar> listForShopCar(Long userId) {
+    @Override
+    public List<ShopCar> listForShopCar(Long userId) {
         HashOperations<String, String, String> opsForHash = redisTemplateShopCar.opsForHash();
         String redisKey = String.format(RedisConstants.SHOP_CAR_PREFIX, userId);
         Map<String, String> entries = opsForHash.entries(redisKey);

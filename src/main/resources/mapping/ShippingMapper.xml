@@ -27,6 +27,14 @@
     where user_id = #{userId,jdbcType=BIGINT}
     and delete_time is null
   </select>
+  <select id="selectByUserIdAndShippingId" resultType="com.jvxie.goshop.model.Shipping">
+    select
+    <include refid="Base_Column_List" />
+    from shipping
+    where user_id = #{userId,jdbcType=BIGINT}
+    and shipping_id = #{shippingId,jdbcType=BIGINT}
+    and delete_time is null
+  </select>
   <update id="deleteByShippingIdAndUserId" parameterType="map">
     update shipping
     set delete_time = CURRENT_TIMESTAMP

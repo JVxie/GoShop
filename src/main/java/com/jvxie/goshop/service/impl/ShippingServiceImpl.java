@@ -9,14 +9,12 @@ import com.jvxie.goshop.mapper.ShippingMapper;
 import com.jvxie.goshop.model.Shipping;
 import com.jvxie.goshop.service.IShippingService;
 import com.jvxie.goshop.utils.IdGeneratorUtil;
-import com.jvxie.goshop.vo.GoodsVo;
 import com.jvxie.goshop.vo.ResponseVo;
 import com.jvxie.goshop.vo.ShippingVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

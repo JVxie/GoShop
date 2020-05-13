@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/user/register/registerByPhone")
-    private ResponseVo registerByPhone(@Valid @RequestBody UserByPhoneForm userByPhoneForm,
+    private ResponseVo<User> registerByPhone(@Valid @RequestBody UserByPhoneForm userByPhoneForm,
                                        HttpServletRequest request) {
         Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
         if (cookie != null) {
@@ -60,11 +60,11 @@ public class UserController {
         }
         User user = new User();
         BeanUtils.copyProperties(userByPhoneForm, user);
-        return userService.registerByPhone(user);
+        return userService.registerByPhone(userByPhoneForm);
     }
 
     @PostMapping("/user/register/registerByEmail")
-    private ResponseVo registerByEmail(@Valid @RequestBody UserByEmailForm userByEmailForm,
+    private ResponseVo<User> registerByEmail(@Valid @RequestBody UserByEmailForm userByEmailForm,
                                        HttpServletRequest request) {
         Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
         if (cookie != null) {
@@ -77,9 +77,7 @@ public class UserController {
                 return ResponseVo.error(ResponseEnum.USER_LOGIN_EXIST);
             }
         }
-        User user = new User();
-        BeanUtils.copyProperties(userByEmailForm, user);
-        return userService.registerByEmail(user);
+        return userService.registerByEmail(userByEmailForm);
     }
 
     @GetMapping("/user/login")
@@ -88,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    private ResponseVo login(@Valid @RequestBody UserLoginFrom userLoginFrom,
+    private ResponseVo<User> login(@Valid @RequestBody UserLoginFrom userLoginFrom,
                              HttpServletRequest request, HttpServletResponse response) {
         // 判断当前设备是否已登陆
         // 从Cookies中获取token
@@ -103,7 +101,7 @@ public class UserController {
                 return ResponseVo.error(ResponseEnum.USER_LOGIN_EXIST);
             }
         }
-        ResponseVo ret = ResponseVo.error(ResponseEnum.LOGINNAME_OR_PASSWORD_ERROR);;
+        ResponseVo<User> ret = ResponseVo.error(ResponseEnum.LOGINNAME_OR_PASSWORD_ERROR);;
         if (userLoginFrom.getLoginName().matches(PHONE_REGEXP)) {
             // 登录名是手机号码
             ret = userService.loginByPhone(userLoginFrom.getLoginName(), userLoginFrom.getUserPsw());
@@ -128,23 +126,22 @@ public class UserController {
             CookieUtil.set(response, "token", tokenId, RedisConstants.TOKEN_EXPIRE);
         } else {
             // 登录失败
-            ret = ResponseVo.error(ResponseEnum.LOGINNAME_OR_PASSWORD_ERROR);
+            return ResponseVo.error(ResponseEnum.LOGINNAME_OR_PASSWORD_ERROR);
         }
         return ret;
     }
 
     @GetMapping("/user")
-    private ResponseVo user(HttpServletRequest request, HttpServletResponse response) {
+    private ResponseVo<User> user(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
         String userId = redisTemplateUser.opsForValue().get(
                 String.format( RedisConstants.TOKEN_PREFIX, cookie.getValue() )
         );
-        ResponseVo ret = userService.findByUserId(Long.valueOf(userId));
-        return ret;
+        return userService.findByUserId(Long.valueOf(userId));
     }
 
     @GetMapping("/user/logout")
-    private ResponseVo logout(HttpServletRequest request, HttpServletResponse response) {
+    private ResponseVo<User> logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = CookieUtil.get(request, CookieConstants.TOKEN);
         // 清除Redis
         redisTemplateUser.opsForValue().getOperations().delete(

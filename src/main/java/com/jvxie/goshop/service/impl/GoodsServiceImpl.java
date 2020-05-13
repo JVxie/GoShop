@@ -2,12 +2,10 @@ package com.jvxie.goshop.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jvxie.goshop.enums.IdGeneratorEnum;
 import com.jvxie.goshop.enums.ResponseEnum;
 import com.jvxie.goshop.mapper.GoodsMapper;
 import com.jvxie.goshop.model.Goods;
 import com.jvxie.goshop.service.IGoodsService;
-import com.jvxie.goshop.utils.IdGeneratorUtil;
 import com.jvxie.goshop.vo.GoodsDetailVo;
 import com.jvxie.goshop.vo.GoodsVo;
 import com.jvxie.goshop.vo.ResponseVo;

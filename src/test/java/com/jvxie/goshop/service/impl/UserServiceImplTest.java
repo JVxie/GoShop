@@ -17,7 +17,7 @@ public class UserServiceImplTest extends GoshopApplicationTests {
 
     @Test
     public void register() {
-        User user = new User("jvxie", "123654", "18050851806");
+        User user = new User();
         userService.registerByPhone(user);
     }
 }

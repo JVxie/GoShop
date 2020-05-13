@@ -2,11 +2,14 @@ package com.jvxie.goshop.service.impl;
 
 import com.jvxie.goshop.enums.IdGeneratorEnum;
 import com.jvxie.goshop.enums.UserGroupEnum;
+import com.jvxie.goshop.form.UserByEmailForm;
+import com.jvxie.goshop.form.UserByPhoneForm;
 import com.jvxie.goshop.mapper.UserMapper;
 import com.jvxie.goshop.model.User;
 import com.jvxie.goshop.utils.IdGeneratorUtil;
 import com.jvxie.goshop.service.IUserService;
 import com.jvxie.goshop.vo.ResponseVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -22,13 +25,15 @@ public class UserServiceImpl implements IUserService {
     UserMapper userMapper;
 
     @Override
-    public ResponseVo registerByEmail(User user) {
+    public ResponseVo<User> registerByEmail(UserByEmailForm form) {
+        User user = new User();
+        BeanUtils.copyProperties(form, user);
         // 生成user_id
         IdGeneratorUtil idGeneratorUtil = new IdGeneratorUtil(IdGeneratorEnum.USER);
         user.setUserId(idGeneratorUtil.nextId());
 
         // 校验user_name是否为空
-        if (user.getUserName() == null || user.getUserName().equals("")) {
+        if (user.getUserName() == null || "".equals(user.getUserName())) {
             user.setUserName("用户" + user.getUserId());
         }
 
@@ -52,13 +57,15 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResponseVo registerByPhone(User user) {
+    public ResponseVo<User> registerByPhone(UserByPhoneForm form) {
+        User user = new User();
+        BeanUtils.copyProperties(form, user);
         // 生成user_id
         IdGeneratorUtil idGeneratorUtil = new IdGeneratorUtil(IdGeneratorEnum.USER);
         user.setUserId(idGeneratorUtil.nextId());
 
         // 校验user_name
-        if (user.getUserName() == null || user.getUserName().equals("")) {
+        if (user.getUserName() == null || "".equals(user.getUserName())) {
             user.setUserName("用户" + user.getUserId());
         }
 
@@ -82,7 +89,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResponseVo loginByEmail(String userEmail, String userPsw) {
+    public ResponseVo<User> loginByEmail(String userEmail, String userPsw) {
         User user = userMapper.selectByUserEmail(userEmail);
         if (user == null ||
                 user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
@@ -94,7 +101,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResponseVo loginByPhone(String userPhone, String userPsw) {
+    public ResponseVo<User> loginByPhone(String userPhone, String userPsw) {
         User user = userMapper.selectByUserPhone(userPhone);
         if (user == null ||
                 !user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
@@ -107,9 +114,11 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public ResponseVo findByUserId(Long userId) {
+    public ResponseVo<User> findByUserId(Long userId) {
         User user = userMapper.selectByUserId(userId);
-        if (user == null) return ResponseVo.error(USER_NOT_FOUND);
+        if (user == null) {
+            return ResponseVo.error(USER_NOT_FOUND);
+        }
         user.setUserPsw("");
         return ResponseVo.success(user);
     }

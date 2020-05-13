@@ -1,10 +1,8 @@
 package com.jvxie.goshop.service.impl;
 
-import com.jvxie.goshop.enums.IdGeneratorEnum;
 import com.jvxie.goshop.mapper.GoodsTypeMapper;
 import com.jvxie.goshop.model.GoodsType;
 import com.jvxie.goshop.service.IGoodsTypeService;
-import com.jvxie.goshop.utils.IdGeneratorUtil;
 import com.jvxie.goshop.vo.GoodsTypeVo;
 import com.jvxie.goshop.vo.ResponseVo;
 import org.springframework.beans.BeanUtils;

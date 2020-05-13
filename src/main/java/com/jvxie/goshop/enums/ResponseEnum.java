@@ -20,6 +20,7 @@ public enum ResponseEnum {
     LOGINNAME_OR_PASSWORD_ERROR(12, "登录名或密码错误"),
     USER_NOT_FOUND(13, "用户不存在"),
     USER_LOGIN_EXIST(14, "用户已经登录"),
+    SHIPPING_NOT_FOUND(15, "收货地址不存在"),
     ;
 
     Integer code;

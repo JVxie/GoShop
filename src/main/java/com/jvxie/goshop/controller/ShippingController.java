@@ -3,7 +3,6 @@ package com.jvxie.goshop.controller;
 import com.jvxie.goshop.constants.CookieConstants;
 import com.jvxie.goshop.constants.RedisConstants;
 import com.jvxie.goshop.form.ShippingForm;
-import com.jvxie.goshop.model.Shipping;
 import com.jvxie.goshop.service.impl.ShippingServiceImpl;
 import com.jvxie.goshop.utils.CookieUtil;
 import com.jvxie.goshop.vo.ResponseVo;

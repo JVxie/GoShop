@@ -7,8 +7,6 @@ import com.jvxie.goshop.form.ShopCarUpdateForm;
 import com.jvxie.goshop.service.impl.ShopCarServiceImpl;
 import com.jvxie.goshop.utils.CookieUtil;
 import com.jvxie.goshop.vo.ResponseVo;
-import com.jvxie.goshop.vo.ShopCarVo;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;

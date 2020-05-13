@@ -7,9 +7,9 @@ public enum IdGeneratorEnum {
 //    SHOP_CAR(0, 3), 废弃，已使用Redis方式储存，无需生成Id
     USER(0, 4),
     USER_GROUP(0, 5),
-    USER_ORDER(0, 6),
-    USER_ORDER_INFO(0, 7),
-    USER_ORDER_PAY(0, 8),
+    ORDER(0, 6),
+    ORDER_INFO(0, 7),
+    ORDER_PAY(0, 8),
     TOKEN(0, 9),
     ;
 
