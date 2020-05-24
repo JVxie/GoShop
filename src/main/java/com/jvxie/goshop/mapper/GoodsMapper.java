@@ -19,4 +19,6 @@ public interface GoodsMapper {
     Goods selectByGoodsId(Long goodsId);
 
     List<Goods> selectByGoodsIdSet(@Param("goodsIdSet") Set<Long> goodsIdSet);
+
+    int updateByGoodsId(Goods record);
 }

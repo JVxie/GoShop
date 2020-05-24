@@ -17,10 +17,13 @@ public enum ResponseEnum {
     FAIL(9, "失败"),
     NEED_LOGIN(10, "用户未登录，请先登录"),
     PARAM_ERROR(11, "参数错误"),
-    LOGINNAME_OR_PASSWORD_ERROR(12, "登录名或密码错误"),
+    LOGIN_NAME_OR_PASSWORD_ERROR(12, "登录名或密码错误"),
     USER_NOT_FOUND(13, "用户不存在"),
     USER_LOGIN_EXIST(14, "用户已经登录"),
     SHIPPING_NOT_FOUND(15, "收货地址不存在"),
+    ORDER_NOT_FOUND(16, "订单不存在"),
+    ORDER_STATUS_ERROR(17, "订单状态有误"),
+    SHOP_CAR_UNSELECTED(18, "购物车无选中商品"),
     ;
 
     Integer code;

@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserService {
         if (user == null ||
                 user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
             // 用户不存在 或 密码错误 均返回（登录名或密码错误)
-            return ResponseVo.error(LOGINNAME_OR_PASSWORD_ERROR);
+            return ResponseVo.error(LOGIN_NAME_OR_PASSWORD_ERROR);
         }
         user.setUserPsw("");
         return ResponseVo.success(user);
@@ -106,7 +106,7 @@ public class UserServiceImpl implements IUserService {
         if (user == null ||
                 !user.getUserPsw().equalsIgnoreCase(DigestUtils.md5DigestAsHex( userPsw.getBytes(StandardCharsets.UTF_8) ))) {
             // 用户不存在 或 密码错误 均返回（登录名或密码错误)
-            return ResponseVo.error(LOGINNAME_OR_PASSWORD_ERROR);
+            return ResponseVo.error(LOGIN_NAME_OR_PASSWORD_ERROR);
         }
         user.setUserPsw("");
         return ResponseVo.success(user);

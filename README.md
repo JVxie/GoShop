@@ -840,7 +840,7 @@
 
 ## 四、 收货地址模块（shipping）
 
-*注：以下功能均需要登录状态*
+*注：以下所有功能均需要登录状态*
 
 ### 1. 收货地址增删改功能
 
@@ -971,12 +971,97 @@
 
 - **GET** /shippings
 
-    *获取所有收货地址*
+    *获取收货地址列表*
+
+    *`pageNum`默认值为`1`，`pageSize`默认值为`10`*
+    
+    >*request*
+    >
+    >```json
+    >pageNum = null
+    >pageSize = null
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >"status": 0,
+    >"data": {
+    >   "total": 3,
+    >   "list": [
+    >       {
+    >           "shipping_id": 707031620267540480,
+    >           "shipping_name": "JVxie",
+    >           "shipping_phone": "18058061873",
+    >           "shipping_province": "北京市",
+    >           "shipping_city": "北京",
+    >           "shipping_district": "五环",
+    >           "shipping_address": "某大学",
+    >           "shipping_zip": "010000"
+    >       },
+    >       {
+    >           "shipping_id": 707035390032478208,
+    >           "shipping_name": "JVxie",
+    >           "shipping_phone": "18058061873",
+    >           "shipping_province": "福建省",
+    >           "shipping_city": "漳州市",
+    >           "shipping_district": "芗城区",
+    >           "shipping_address": "某大学",
+    >           "shipping_zip": "363000"
+    >       },
+    >       {
+    >           "shipping_id": 707035397452201984,
+    >           "shipping_name": "JVxie",
+    >           "shipping_phone": "18058061873",
+    >           "shipping_province": "福建省",
+    >           "shipping_city": "漳州市",
+    >           "shipping_district": "芗城区",
+    >           "shipping_address": "某大学",
+    >           "shipping_zip": "363000"
+    >       }
+    >   ],
+    >   "page_num": 1,
+    >   "page_size": 10,
+    >   "size": 3,
+    >   "start_row": 1,
+    >   "end_row": 3,
+    >   "pages": 1,
+    >   "pre_page": 0,
+    >   "next_page": 0,
+    >   "is_first_page": true,
+    >   "is_last_page": true,
+    >   "has_previous_page": false,
+    >   "has_next_page": false,
+    >   "navigate_pages": 8,
+    >   "navigatepage_nums": [
+    >       1
+    >   ],
+    >   "navigate_first_page": 1,
+    >   "navigate_last_page": 1
+    >}
+    >}
+    >```
+
+## 五、订单模块
+
+*注：以下所有功能均需要登录状态*
+
+### 1. 订单信息功能
+
+- **GET** /orders
+
+    *获取用户订单列表*
+
+    *`pageNum`默认值为`1`，`pageSize`默认值为`10`*
 
     >*request*
     >
     >```json
-    >无参数
+    >pageNum = null
+    >pageSize = null
     >```
     >
     >*response*
@@ -987,57 +1072,325 @@
     >{
     >    "status": 0,
     >    "data": {
-    >        "total": 3,
+    >        "total": 5,
     >        "list": [
     >            {
-    >                "shipping_id": 707031620267540480,
+    >                "order_id": 713571362975514624,
+    >                "order_cost": 40.00,
+    >                "order_postage": 0.00,
+    >                "order_status": 1,
+    >                "order_pay_time": null,
+    >                "order_send_time": null,
+    >                "order_end_time": null,
+    >                "order_close_time": null,
+    >                "order_pay_type": 1,
     >                "shipping_name": "JVxie",
     >                "shipping_phone": "18058061873",
     >                "shipping_province": "北京市",
     >                "shipping_city": "北京",
     >                "shipping_district": "五环",
     >                "shipping_address": "某大学",
-    >                "shipping_zip": "010000"
+    >                "shipping_zip": "010000",
+    >                "create_time": "2020-05-05T05:51:14.000+0000",
+    >                "order_info_vo_list": [
+    >                    {
+    >                        "order_id": 713571362975514624,
+    >                        "goods_id": 700017327848030208,
+    >                        "goods_title": "G-SHOCK 黑金时尚电子手表",
+    >                        "goods_img": null,
+    >                        "goods_price": 10.00,
+    >                        "quantity": 1,
+    >                        "total_price": 10.00,
+    >                        "create_time": "2020-05-23T06:57:50.000+0000"
+    >                    },
+    >                    {
+    >                        "order_id": 713571362975514624,
+    >                        "goods_id": 700017327869001728,
+    >                        "goods_title": "可口可乐500ml",
+    >                        "goods_img": null,
+    >                        "goods_price": 10.00,
+    >                        "quantity": 3,
+    >                        "total_price": 30.00,
+    >                        "create_time": "2020-05-23T06:57:50.000+0000"
+    >                    }
+    >                ]
     >            },
     >            {
-    >                "shipping_id": 707035390032478208,
+    >                "order_id": 713794645637464064,
+    >                "order_cost": 40.00,
+    >                "order_postage": 0.00,
+    >                "order_status": 0,
+    >                "order_pay_time": null,
+    >                "order_send_time": null,
+    >                "order_end_time": null,
+    >                "order_close_time": "2020-05-23T14:16:54.000+0000",
+    >                "order_pay_type": 1,
     >                "shipping_name": "JVxie",
     >                "shipping_phone": "18058061873",
-    >                "shipping_province": "福建省",
-    >                "shipping_city": "漳州市",
-    >                "shipping_district": "芗城区",
+    >                "shipping_province": "北京市",
+    >                "shipping_city": "北京",
+    >                "shipping_district": "五环",
     >                "shipping_address": "某大学",
-    >                "shipping_zip": "363000"
-    >            },
-    >            {
-    >                "shipping_id": 707035397452201984,
-    >                "shipping_name": "JVxie",
-    >                "shipping_phone": "18058061873",
-    >                "shipping_province": "福建省",
-    >                "shipping_city": "漳州市",
-    >                "shipping_district": "芗城区",
-    >                "shipping_address": "某大学",
-    >                "shipping_zip": "363000"
+    >                "shipping_zip": "010000",
+    >                "create_time": "2020-05-05T05:51:14.000+0000",
+    >                "order_info_vo_list": [
+    >                    {
+    >                        "order_id": 713794645637464064,
+    >                        "goods_id": 700017327848030208,
+    >                        "goods_title": "G-SHOCK 黑金时尚电子手表",
+    >                        "goods_img": null,
+    >                        "goods_price": 10.00,
+    >                        "quantity": 1,
+    >                        "total_price": 10.00,
+    >                        "create_time": "2020-05-23T21:45:06.000+0000"
+    >                    },
+    >                    {
+    >                        "order_id": 713794645637464064,
+    >                        "goods_id": 700017327869001728,
+    >                        "goods_title": "可口可乐500ml",
+    >                        "goods_img": null,
+    >                        "goods_price": 10.00,
+    >                        "quantity": 3,
+    >                        "total_price": 30.00,
+    >                        "create_time": "2020-05-23T21:45:06.000+0000"
+    >                    }
+    >                ]
     >            }
     >        ],
     >        "page_num": 1,
-    >        "page_size": 10,
-    >        "size": 3,
+    >        "page_size": 2,
+    >        "size": 2,
     >        "start_row": 1,
-    >        "end_row": 3,
-    >        "pages": 1,
+    >        "end_row": 2,
+    >        "pages": 3,
     >        "pre_page": 0,
-    >        "next_page": 0,
+    >        "next_page": 2,
     >        "is_first_page": true,
-    >        "is_last_page": true,
+    >        "is_last_page": false,
     >        "has_previous_page": false,
-    >        "has_next_page": false,
+    >        "has_next_page": true,
     >        "navigate_pages": 8,
     >        "navigatepage_nums": [
-    >            1
+    >            1,
+    >            2,
+    >            3
     >        ],
     >        "navigate_first_page": 1,
-    >        "navigate_last_page": 1
+    >        "navigate_last_page": 3
     >    }
     >}
     >```
+
+- **GET** /orders/{orderId}
+
+    *获取某个订单详情*
+
+    >*request*
+    >
+    >```json
+    >orderId = 713798090306093056
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >"status": 0,
+    >"data": {
+    >   "order_id": 713798090306093056,
+    >   "order_cost": 30.00,
+    >   "order_postage": 0.00,
+    >   "order_status": 1,
+    >   "order_pay_time": null,
+    >   "order_send_time": null,
+    >   "order_end_time": null,
+    >   "order_close_time": null,
+    >   "order_pay_type": 1,
+    >   "shipping_name": "JVxie",
+    >   "shipping_phone": "18058061873",
+    >   "shipping_province": "北京市",
+    >   "shipping_city": "北京",
+    >   "shipping_district": "五环",
+    >   "shipping_address": "某大学",
+    >   "shipping_zip": "010000",
+    >   "create_time": "2020-05-05T05:51:14.000+0000",
+    >   "order_info_vo_list": [
+    >       {
+    >           "order_id": 713798090306093056,
+    >           "goods_id": 700017327848030208,
+    >           "goods_title": "G-SHOCK 黑金时尚电子手表",
+    >           "goods_img": null,
+    >           "goods_price": 10.00,
+    >           "quantity": 3,
+    >           "total_price": 30.00,
+    >           "create_time": "2020-05-23T21:58:47.000+0000"
+    >       }
+    >   ]
+    >}
+    >}
+    >```
+    >
+    >- failed
+    >
+    >```json
+    >{
+    >    "status": 16,
+    >    "msg": "订单不存在"
+    >}
+    >```
+    >
+    >
+
+### 2. 下单功能
+
+- **POST** /orders
+
+    *需要确保购物车内有选中商品*
+
+    >*request*
+    >
+    >```json
+    >{
+    >    "shipping_id": 707031620267540480,
+    >    "pay_type": 1
+    >}
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >    "status": 0,
+    >    "data": {
+    >        "order_id": 714177233468260352,
+    >        "order_cost": 20.00,
+    >        "order_postage": 0,
+    >        "order_status": 1,
+    >        "order_pay_time": null,
+    >        "order_send_time": null,
+    >        "order_end_time": null,
+    >        "order_close_time": null,
+    >        "order_pay_type": 1,
+    >        "shipping_name": "JVxie",
+    >        "shipping_phone": "18058061873",
+    >        "shipping_province": "北京市",
+    >        "shipping_city": "北京",
+    >        "shipping_district": "五环",
+    >        "shipping_address": "某大学",
+    >        "shipping_zip": "010000",
+    >        "create_time": "2020-05-05T05:51:14.000+0000",
+    >        "order_info_vo_list": [
+    >            {
+    >                "order_id": 714177233468260352,
+    >                "goods_id": 700017327848030208,
+    >                "goods_title": "G-SHOCK 黑金时尚电子手表",
+    >                "goods_img": null,
+    >                "goods_price": 10.00,
+    >                "quantity": 2,
+    >                "total_price": 20.00,
+    >                "create_time": "2020-04-15T21:18:56.000+0000"
+    >            }
+    >        ]
+    >    }
+    >}
+    >```
+    >
+    >- failed
+    >
+    >```json
+    >{
+    >    "status": 11,
+    >    "msg": "收货地址不能为空"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 15,
+    >    "msg": "收货地址不存在"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 18,
+    >    "msg": "购物车无选中商品"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 4,
+    >    "msg": "商品不存在，商品ID：XXX"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 5,
+    >    "msg": "XXX不是在售状态"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 6,
+    >    "msg": "XXX库存不正确"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": -1,
+    >    "msg": "服务器错误"
+    >}
+    >```
+
+
+
+### 4. 取消订单功能
+
+- **PUT** /orders/{orderId}
+
+    *只有未付款状态的订单可以取消*
+
+    >*request*
+    >
+    >```json
+    >orderId = 713798090306093056
+    >```
+    >
+    >*response*
+    >
+    >- success
+    >
+    >```json
+    >{
+    >    "status": 0,
+    >    "msg": "成功"
+    >}
+    >```
+    >
+    >- failed
+    >
+    >```json
+    >{
+    >    "status": 17,
+    >    "msg": "订单状态有误"
+    >}
+    >```
+    >
+    >```json
+    >{
+    >    "status": 16,
+    >    "msg": "订单不存在"
+    >}
+    >```
+
+    
+
+    

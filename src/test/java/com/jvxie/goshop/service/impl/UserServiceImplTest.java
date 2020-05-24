@@ -4,8 +4,8 @@ import com.jvxie.goshop.GoshopApplicationTests;
 import com.jvxie.goshop.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +17,5 @@ public class UserServiceImplTest extends GoshopApplicationTests {
 
     @Test
     public void register() {
-        User user = new User();
-        userService.registerByPhone(user);
     }
 }

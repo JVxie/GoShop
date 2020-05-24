@@ -30,18 +30,8 @@
     shipping_province, shipping_city, shipping_district, shipping_address, shipping_zip, 
     create_time, update_time, delete_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from order
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.Order" useGeneratedKeys="true">
-    insert into order (order_id, user_id, order_cost, 
+    insert into `order` (order_id, user_id, order_cost,
       order_postage, order_status, order_pay_time, 
       order_send_time, order_end_time, order_close_time, 
       order_pay_type, shipping_name, shipping_phone, 
@@ -57,7 +47,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.Order" useGeneratedKeys="true">
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
         order_id,
@@ -183,12 +173,9 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jvxie.goshop.model.Order">
-    update order
+  <update id="updateByOrderId">
+    update `order`
     <set>
-      <if test="orderId != null">
-        order_id = #{orderId,jdbcType=BIGINT},
-      </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
@@ -237,40 +224,22 @@
       <if test="shippingZip != null">
         shipping_zip = #{shippingZip,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteTime != null">
-        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where order_id = #{orderId,jdbcType=BIGINT}
+    and delete_time is null
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jvxie.goshop.model.Order">
-    update order
-    set order_id = #{orderId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      order_cost = #{orderCost,jdbcType=DECIMAL},
-      order_postage = #{orderPostage,jdbcType=DECIMAL},
-      order_status = #{orderStatus,jdbcType=INTEGER},
-      order_pay_time = #{orderPayTime,jdbcType=TIMESTAMP},
-      order_send_time = #{orderSendTime,jdbcType=TIMESTAMP},
-      order_end_time = #{orderEndTime,jdbcType=TIMESTAMP},
-      order_close_time = #{orderCloseTime,jdbcType=TIMESTAMP},
-      order_pay_type = #{orderPayType,jdbcType=INTEGER},
-      shipping_name = #{shippingName,jdbcType=VARCHAR},
-      shipping_phone = #{shippingPhone,jdbcType=VARCHAR},
-      shipping_province = #{shippingProvince,jdbcType=VARCHAR},
-      shipping_city = #{shippingCity,jdbcType=VARCHAR},
-      shipping_district = #{shippingDistrict,jdbcType=VARCHAR},
-      shipping_address = #{shippingAddress,jdbcType=VARCHAR},
-      shipping_zip = #{shippingZip,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  <select id="selectByUserId" resultType="com.jvxie.goshop.model.Order">
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where user_id = #{userId,jdbcType=BIGINT}
+    and delete_time is null
+  </select>
+  <select id="selectByOrderId" resultType="com.jvxie.goshop.model.Order">
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where order_id = #{orderId,jdbcType=BIGINT}
+    and delete_time is null
+  </select>
 </mapper>

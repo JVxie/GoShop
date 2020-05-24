@@ -6,10 +6,10 @@
     <result column="order_info_id" jdbcType="BIGINT" property="orderInfoId" />
     <result column="order_id" jdbcType="BIGINT" property="orderId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="orign_goods_id" jdbcType="BIGINT" property="orignGoodsId" />
-    <result column="orign_goods_title" jdbcType="VARCHAR" property="orignGoodsTitle" />
-    <result column="orign_goods_img" jdbcType="VARCHAR" property="orignGoodsImg" />
-    <result column="orign_goods_price" jdbcType="DECIMAL" property="orignGoodsPrice" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="goods_title" jdbcType="VARCHAR" property="goodsTitle" />
+    <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
     <result column="quantity" jdbcType="INTEGER" property="quantity" />
     <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -17,8 +17,8 @@
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_info_id, order_id, user_id, orign_goods_id, orign_goods_title, orign_goods_img, 
-    orign_goods_price, quantity, total_price, create_time, update_time, delete_time
+    id, order_info_id, order_id, user_id, goods_id, goods_title, goods_img, goods_price, 
+    quantity, total_price, create_time, update_time, delete_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,19 +26,33 @@
     from order_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByOrderIdSet" resultType="com.jvxie.goshop.model.OrderInfo">
+    select
+    <include refid="Base_Column_List" />
+    from order_info
+    <where>
+      <if test="orderIdSet.size() > 0">
+        order_id in
+        <foreach collection="orderIdSet" item="item" index="index" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      and delete_time is null
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from order_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jvxie.goshop.model.OrderInfo" useGeneratedKeys="true">
     insert into order_info (order_info_id, order_id, user_id, 
-      orign_goods_id, orign_goods_title, orign_goods_img, 
-      orign_goods_price, quantity, total_price, 
+      goods_id, goods_title, goods_img, 
+      goods_price, quantity, total_price, 
       create_time, update_time, delete_time
       )
     values (#{orderInfoId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
-      #{orignGoodsId,jdbcType=BIGINT}, #{orignGoodsTitle,jdbcType=VARCHAR}, #{orignGoodsImg,jdbcType=VARCHAR}, 
-      #{orignGoodsPrice,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{goodsId,jdbcType=BIGINT}, #{goodsTitle,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR}, 
+      #{goodsPrice,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -54,17 +68,17 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="orignGoodsId != null">
-        orign_goods_id,
+      <if test="goodsId != null">
+        goods_id,
       </if>
-      <if test="orignGoodsTitle != null">
-        orign_goods_title,
+      <if test="goodsTitle != null">
+        goods_title,
       </if>
-      <if test="orignGoodsImg != null">
-        orign_goods_img,
+      <if test="goodsImg != null">
+        goods_img,
       </if>
-      <if test="orignGoodsPrice != null">
-        orign_goods_price,
+      <if test="goodsPrice != null">
+        goods_price,
       </if>
       <if test="quantity != null">
         quantity,
@@ -92,17 +106,17 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="orignGoodsId != null">
-        #{orignGoodsId,jdbcType=BIGINT},
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
       </if>
-      <if test="orignGoodsTitle != null">
-        #{orignGoodsTitle,jdbcType=VARCHAR},
+      <if test="goodsTitle != null">
+        #{goodsTitle,jdbcType=VARCHAR},
       </if>
-      <if test="orignGoodsImg != null">
-        #{orignGoodsImg,jdbcType=VARCHAR},
+      <if test="goodsImg != null">
+        #{goodsImg,jdbcType=VARCHAR},
       </if>
-      <if test="orignGoodsPrice != null">
-        #{orignGoodsPrice,jdbcType=DECIMAL},
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
       </if>
       <if test="quantity != null">
         #{quantity,jdbcType=INTEGER},
@@ -121,6 +135,19 @@
       </if>
     </trim>
   </insert>
+  <insert id="batchInsert">
+    insert into order_info (order_info_id, order_id, user_id,
+      goods_id, goods_title, goods_img,
+      goods_price, quantity, total_price
+      )
+    values
+    <foreach collection="orderInfoList" index="index" item="item" separator=",">
+      (#{item.orderInfoId}, #{item.orderId}, #{item.userId},
+      #{item.goodsId}, #{item.goodsTitle}, #{item.goodsImg},
+      #{item.goodsPrice}, #{item.quantity}, #{item.totalPrice}
+      )
+    </foreach>
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jvxie.goshop.model.OrderInfo">
     update order_info
     <set>
@@ -133,17 +160,17 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="orignGoodsId != null">
-        orign_goods_id = #{orignGoodsId,jdbcType=BIGINT},
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
       </if>
-      <if test="orignGoodsTitle != null">
-        orign_goods_title = #{orignGoodsTitle,jdbcType=VARCHAR},
+      <if test="goodsTitle != null">
+        goods_title = #{goodsTitle,jdbcType=VARCHAR},
       </if>
-      <if test="orignGoodsImg != null">
-        orign_goods_img = #{orignGoodsImg,jdbcType=VARCHAR},
+      <if test="goodsImg != null">
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
       </if>
-      <if test="orignGoodsPrice != null">
-        orign_goods_price = #{orignGoodsPrice,jdbcType=DECIMAL},
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
       </if>
       <if test="quantity != null">
         quantity = #{quantity,jdbcType=INTEGER},
@@ -168,10 +195,10 @@
     set order_info_id = #{orderInfoId,jdbcType=BIGINT},
       order_id = #{orderId,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=BIGINT},
-      orign_goods_id = #{orignGoodsId,jdbcType=BIGINT},
-      orign_goods_title = #{orignGoodsTitle,jdbcType=VARCHAR},
-      orign_goods_img = #{orignGoodsImg,jdbcType=VARCHAR},
-      orign_goods_price = #{orignGoodsPrice,jdbcType=DECIMAL},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
       quantity = #{quantity,jdbcType=INTEGER},
       total_price = #{totalPrice,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},

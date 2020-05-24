@@ -5,10 +5,15 @@ spring:
     servlet:
       path: /
   datasource: # 配置数据库
-    url: jdbc:mysql://localhost:3306/goshop?characterEncoding=utf-8&time_zone=+8:00
+    url: jdbc:mysql://120.78.146.199:3306/goshop?characterEncoding=utf-8&time_zone=+8:00
     username: root
     password: 112233789xX@
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000
+      connection-test-query: SELECT 1
   jackson: # 配置jackson 自动转下划线
     property-naming-strategy: SNAKE_CASE
   redis: # 配置redis
@@ -55,7 +60,6 @@ pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
-
 
 
 

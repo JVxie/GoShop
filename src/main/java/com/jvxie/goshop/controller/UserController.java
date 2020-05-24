@@ -101,7 +101,7 @@ public class UserController {
                 return ResponseVo.error(ResponseEnum.USER_LOGIN_EXIST);
             }
         }
-        ResponseVo<User> ret = ResponseVo.error(ResponseEnum.LOGINNAME_OR_PASSWORD_ERROR);;
+        ResponseVo<User> ret = ResponseVo.error(ResponseEnum.LOGIN_NAME_OR_PASSWORD_ERROR);;
         if (userLoginFrom.getLoginName().matches(PHONE_REGEXP)) {
             // 登录名是手机号码
             ret = userService.loginByPhone(userLoginFrom.getLoginName(), userLoginFrom.getUserPsw());
@@ -126,7 +126,7 @@ public class UserController {
             CookieUtil.set(response, "token", tokenId, RedisConstants.TOKEN_EXPIRE);
         } else {
             // 登录失败
-            return ResponseVo.error(ResponseEnum.LOGINNAME_OR_PASSWORD_ERROR);
+            return ResponseVo.error(ResponseEnum.LOGIN_NAME_OR_PASSWORD_ERROR);
         }
         return ret;
     }

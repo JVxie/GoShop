@@ -1,17 +1,30 @@
-package com.jvxie.goshop.vo;
+package com.jvxie.goshop.model;
 
-import lombok.Data;
-
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
+import lombok.Data;
 
+/**
+ * order
+ * @author 
+ */
 @Data
-public class OrderVo {
+public class Order implements Serializable {
+    /**
+     * 作主键用
+     */
+    private Integer id;
+
     /**
      * 订单ID（订单号）
      */
     private Long orderId;
+
+    /**
+     * 订单所属用户ID
+     */
+    private Long userId;
 
     /**
      * 订单总金额
@@ -93,5 +106,15 @@ public class OrderVo {
      */
     private Date createTime;
 
-    private List<OrderInfoVo> orderInfoVoList;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
+    /**
+     * 删除时间
+     */
+    private Date deleteTime;
+
+    private static final long serialVersionUID = 1L;
 }

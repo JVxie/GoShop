@@ -2,16 +2,21 @@ package com.jvxie.goshop.mapper;
 
 import com.jvxie.goshop.model.Order;
 
-public interface OrderMapper {
-    int deleteByPrimaryKey(Integer id);
+import java.util.List;
 
+/**
+ * 插入order表 order需要加反引号
+ * `order`
+ */
+
+public interface OrderMapper {
     int insert(Order record);
 
     int insertSelective(Order record);
 
-    Order selectByPrimaryKey(Integer id);
+    List<Order> selectByUserId(Long userId);
 
-    int updateByPrimaryKeySelective(Order record);
+    Order selectByOrderId(Long orderId);
 
-    int updateByPrimaryKey(Order record);
+    int updateByOrderId(Order record);
 }

@@ -20,6 +20,37 @@
     id, goods_id, goods_title, goods_type_id, goods_old_price, goods_price, goods_status, 
     goods_count, goods_img, goods_detail, create_time, update_time, delete_time
   </sql>
+  <update id="updateByGoodsId">
+    update goods
+    <set>
+      <if test="goodsTitle != null">
+        goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeId != null">
+        goods_type_id = #{goodsTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsOldPrice != null">
+        goods_old_price = #{goodsOldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsStatus != null">
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCount != null">
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImg != null">
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetail != null">
+        goods_detail = #{goodsDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=BIGINT}
+    and delete_time is null
+  </update>
   <select id="selectByGoodsTypeIdSet"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
