@@ -211,4 +211,23 @@ public class OrderServiceImpl implements IOrderService {
         }
         return ResponseVo.success();
     }
+
+    @Override
+    public void paid(Long orderId) {
+        Order order = orderMapper.selectByOrderId(orderId);
+        if (order == null) {
+            throw new RuntimeException(ResponseEnum.ORDER_NOT_FOUND.getDesc() + "，订单ID：" + orderId);
+        }
+        if (!order.getOrderStatus().equals(OrderStatusEnum.NO_PAY.getCode())) {
+            throw new RuntimeException(ResponseEnum.ORDER_STATUS_ERROR.getDesc() + "，订单ID：" + orderId);
+        }
+        order.setOrderStatus(OrderStatusEnum.NO_SHIP.getCode());
+//        order.setOrderCloseTime(new Date());
+        order.setOrderPayTime(new Date());
+        int row = orderMapper.updateByOrderId(order);
+        if (row <= 0) {
+            throw new RuntimeException("订单更新“待收货”状态失败" + "，订单ID：" + orderId);
+//            return ResponseVo.error(ResponseEnum.ERROR);
+        }
+    }
 }

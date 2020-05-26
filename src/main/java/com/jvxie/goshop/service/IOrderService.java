@@ -13,4 +13,6 @@ public interface IOrderService {
     ResponseVo<OrderVo> detail(Long userId, Long orderId);
 
     ResponseVo cancel(Long userId, Long orderId);
+
+    void paid(Long orderId);
 }

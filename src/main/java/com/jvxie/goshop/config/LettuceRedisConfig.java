@@ -29,7 +29,8 @@ public class LettuceRedisConfig {
             @Value("${spring.redis.local.database}") int database,
             @Value("${spring.redis.local.timeout}") long timeout,
             @Value("${spring.redis.local.host}") String hostName,
-            @Value("${spring.redis.local.port}") int port
+            @Value("${spring.redis.local.port}") int port,
+            @Value("${spring.redis.local.password}") String password
     ) {
 
         /* ========= 基本配置 ========= */
@@ -37,6 +38,7 @@ public class LettuceRedisConfig {
         configuration.setHostName(hostName);
         configuration.setPort(port);
         configuration.setDatabase(database);
+        configuration.setPassword(password);
         /* ========= 连接池通用配置 ========= */
         GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
         genericObjectPoolConfig.setMaxIdle(maxIdle);
@@ -60,7 +62,8 @@ public class LettuceRedisConfig {
             @Value("${spring.redis.user.database}") int database,
             @Value("${spring.redis.user.timeout}") long timeout,
             @Value("${spring.redis.user.host}") String hostName,
-            @Value("${spring.redis.user.port}") int port
+            @Value("${spring.redis.user.port}") int port,
+            @Value("${spring.redis.user.password}") String password
     ) {
 
         /* ========= 基本配置 ========= */
@@ -68,6 +71,7 @@ public class LettuceRedisConfig {
         configuration.setHostName(hostName);
         configuration.setPort(port);
         configuration.setDatabase(database);
+        configuration.setPassword(password);
         /* ========= 连接池通用配置 ========= */
         GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
         genericObjectPoolConfig.setMaxIdle(maxIdle);
@@ -91,7 +95,8 @@ public class LettuceRedisConfig {
             @Value("${spring.redis.shop-car.database}") int database,
             @Value("${spring.redis.shop-car.timeout}") long timeout,
             @Value("${spring.redis.shop-car.host}") String hostName,
-            @Value("${spring.redis.shop-car.port}") int port
+            @Value("${spring.redis.shop-car.port}") int port,
+            @Value("${spring.redis.shop-car.password}") String password
     ) {
 
         /* ========= 基本配置 ========= */
@@ -99,6 +104,7 @@ public class LettuceRedisConfig {
         configuration.setHostName(hostName);
         configuration.setPort(port);
         configuration.setDatabase(database);
+        configuration.setPassword(password);
         /* ========= 连接池通用配置 ========= */
         GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
         genericObjectPoolConfig.setMaxIdle(maxIdle);
