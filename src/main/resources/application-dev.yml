@@ -5,7 +5,7 @@ spring:
     servlet:
       path: /
   datasource: # 配置数据库
-    url: jdbc:mysql://120.78.146.199:3306/goshop?characterEncoding=utf-8&time_zone=+8:00
+    url: jdbc:mysql://localhost:3306/goshop?characterEncoding=utf-8&time_zone=+8:00
     username: root
     password: 112233789xX@
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,7 +15,7 @@ spring:
       max-lifetime: 30000
       connection-test-query: SELECT 1
   rabbitmq:
-    addresses: 120.78.146.199
+    addresses: localhost
     port: 5672
     username: guest
     password: 88598451
@@ -29,19 +29,19 @@ spring:
         max-idle: 8
     local:
       database: 0
-      host: 120.78.146.199
+      host: localhost
       port: 6379
       password: 123654
       timeout: 50
     user:
       database: 1
-      host: 120.78.146.199
+      host: localhost
       port: 6379
       password: 123654
       timeout: 50
     shop-car:
       database: 2
-      host: 120.78.146.199
+      host: localhost
       port: 6379
       password: 123654
       timeout: 50
